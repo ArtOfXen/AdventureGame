@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957129ba0a3510c49bea7f50387db73b, type: 3}
+  m_Name: Two Balls
+  m_EditorClassIdentifier: 
+  actorName: Two Balls
+  examineText: I have two balls now...
+  interactionsOtherThanExamine_worldObject: 
+  worldPosition: {x: 0, y: 0, z: 0}
+  inventoryImage: {fileID: -6998331952523800363, guid: a5cc6b1b9b01a4649a7907e758d46444,
+    type: 3}
+  interactionsOtherThanExamine_inventoryItem: 06000000
+  actorsThisCanBeCombinedWith: []

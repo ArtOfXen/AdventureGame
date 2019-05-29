@@ -1,0 +1,485 @@
+fileFormatVersion: 2
+guid: 062eddf2a7ea6a94581dd05a999753e6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8317488747628415250
+    second: TestPaper2_0
+  - first:
+      213: -1371947501883794013
+    second: TestPaper2_1
+  - first:
+      213: -5153943902815448794
+    second: TestPaper2_2
+  - first:
+      213: -2460967463044694661
+    second: TestPaper2_3
+  - first:
+      213: -2673262908784178004
+    second: TestPaper2_4
+  - first:
+      213: 5038626263254525107
+    second: TestPaper2_5
+  - first:
+      213: 3767761962332759202
+    second: TestPaper2_6
+  - first:
+      213: -5002332835550942302
+    second: TestPaper2_7
+  - first:
+      213: 4195831598202928666
+    second: TestPaper2_8
+  - first:
+      213: 2749989321168303397
+    second: TestPaper2_9
+  - first:
+      213: -2318639747812751424
+    second: TestPaper2_10
+  - first:
+      213: 3148476817129654531
+    second: TestPaper2_11
+  - first:
+      213: 2920368152735575919
+    second: TestPaper2_12
+  - first:
+      213: 5098636175445978465
+    second: TestPaper2_13
+  - first:
+      213: -2253263694989452169
+    second: TestPaper2_14
+  - first:
+      213: -8308477143552761952
+    second: TestPaper2_15
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TestPaper2_0
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 1087
+        width: 597
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0923bd57c9ca0c643a8af0c3de96a9e6
+      internalID: 8317488747628415250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_1
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 999
+        width: 199
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 276675fba0d3796468abbb5ffcbe9f35
+      internalID: -1371947501883794013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_2
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 999
+        width: 291
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 988529bdcbed9324e8f20383b259e4ef
+      internalID: -5153943902815448794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_3
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 999
+        width: 199
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d685116217498534a96991b1dff555eb
+      internalID: -2460967463044694661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_4
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 465
+        width: 528
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d095018ce7c5f444a36d13a0679e95f
+      internalID: -2673262908784178004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_5
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 907
+        width: 155
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c98b55630890249bf5e7d33c23e832
+      internalID: 5038626263254525107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_6
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 858
+        width: 155
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d84c065e90cc7428373256f089ea74
+      internalID: 3767761962332759202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_7
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 796
+        width: 155
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfa2426b9173ee243a2971181e4bb72c
+      internalID: -5002332835550942302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_8
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 751
+        width: 155
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e791ccbdc952764295be7215f829331
+      internalID: 4195831598202928666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_9
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 703
+        width: 155
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c2beab62f0a9d545b4378b7c0dc46d6
+      internalID: 2749989321168303397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_10
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 657
+        width: 154
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31da0a7f3bdf46449b874f2fc4fbdcc3
+      internalID: -2318639747812751424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_11
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 611
+        width: 153
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cda129354a7a7e24aa0e0af8500d37cb
+      internalID: 3148476817129654531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_12
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 468
+        width: 154
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f9a7ae88fd98c243bd0103335dde33c
+      internalID: 2920368152735575919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_13
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 205
+        width: 111
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 099141c8a0175e34e9c9b97a5281d09a
+      internalID: 5098636175445978465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_14
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 200
+        width: 349
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5ad6f71fcbb1a840ba142bb860b4feb
+      internalID: -2253263694989452169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestPaper2_15
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 50
+        width: 348
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1af01b0e3db817f4f8acea8e3014ecd8
+      internalID: -8308477143552761952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 948b7fc996230f84896481464540f8f4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

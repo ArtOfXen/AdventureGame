@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957129ba0a3510c49bea7f50387db73b, type: 3}
+  m_Name: Ball
+  m_EditorClassIdentifier: 
+  actorName: Ball
+  examineText: It's that ball I found.
+  interactionsOtherThanExamine_worldObject: 02000000
+  worldPosition: {x: 0, y: 0, z: 0}
+  inventoryImage: {fileID: 21300000, guid: 8a355be8a28a9b54a9f126e349f25948, type: 3}
+  interactionsOtherThanExamine_inventoryItem: 05000000
+  actorsThisCanBeCombinedWith:
+  - actorData: {fileID: 11400000, guid: bbbef928e2b38cb4f95538bcb391f909, type: 2}
+    combinationType: 3
+    outcomeForThisActor: 0
+    outcomeForOtherActor: 0
+    newActorToCreate: {fileID: 11400000, guid: fcdb3294053f01549a0cd1317b519c35, type: 2}
+  - actorData: {fileID: 11400000, guid: d55a9d6da99931d4ea84b59e7453c3be, type: 2}
+    combinationType: 0
+    outcomeForThisActor: 0
+    outcomeForOtherActor: 0
+    newActorToCreate: {fileID: 11400000, guid: 184d83881d673934d9a03acaf11d44de, type: 2}
