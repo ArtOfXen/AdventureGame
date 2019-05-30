@@ -15,6 +15,7 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
     public Sprite examineButtonSprite;
     public Sprite useButtonSprite;
     public Sprite combineButtonSprite;
+    public Sprite separateButtonSprite;
 
     public Button[] interactionButtons;
     private InteractableObjectScript.InteractionType[] interactions;
@@ -29,7 +30,6 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
         inventory = FindObjectOfType<InventoryScript>();
         menuOpen = false;
         mouseOver = false;
-        //data = GetComponent<InteractableObjectScript>().data;
     }
 
     // Update is called once per frame
@@ -88,25 +88,16 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
                 case InteractableObjectScript.InteractionType.Combine:
                     interactionButtons[i].GetComponent<Image>().sprite = combineButtonSprite;
                     break;
+                case InteractableObjectScript.InteractionType.Separate:
+                    interactionButtons[i].GetComponent<Image>().sprite = separateButtonSprite;
+                    break;
                 default:
-                    Debug.Log("Item in item slot " + itemSlotIndex + " has an incorrect interaction set");
+                    Debug.Log("Item in item slot " + itemSlotIndex + " has an incompatable interaction set");
                     break;
             }
         }
 
         menuOpen = true;
-    }
-
-    private void examineItem()
-    {
-        string examineText = inventory.items[itemSlotIndex].examineText;
-
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().enableExamineObjectText(examineText);
-    }
-
-    private void combineItem()
-    {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().enableCombineWithText(this);
     }
 
     public void interactionButtonClicked(int buttonNumber)
@@ -116,11 +107,16 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
         switch (interactions[buttonNumber])
         {
             case InteractableObjectScript.InteractionType.Examine:
-                examineItem();
+                string examineText = inventory.items[itemSlotIndex].examineText;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().enableExamineObjectText(examineText);
                 break;
 
             case InteractableObjectScript.InteractionType.Combine:
-                combineItem();
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().enableCombineWithText(this);
+                break;
+
+            case InteractableObjectScript.InteractionType.Separate:
+                FindObjectOfType<GameManagerScript>().GetComponent<GameManagerScript>().separateActor(this);
                 break;
 
             default:

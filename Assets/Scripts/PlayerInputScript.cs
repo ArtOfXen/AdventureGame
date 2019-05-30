@@ -40,10 +40,8 @@ public class PlayerInputScript : MonoBehaviour
     void Start()
     {
         currentSpeed = Vector3.zero;
-        //isHighlightingAnObject = false;
         UI_nameOfHighlightedObject = GameObject.FindGameObjectWithTag("HoveredObjectName_UIText");
         destinationPosition = gameObject.transform.position;
-        //selectedObjectMenuIsOpen = false;
         setQueuedAction(null, InteractableObjectScript.InteractionType.Examine);
         mouseOverUI = false;
         showExamineObjectText = false;
@@ -157,7 +155,6 @@ public class PlayerInputScript : MonoBehaviour
             {
                 combiningInProgress = false;
                 checkIfMouseHighlightingObject();
-
             }
         }
 

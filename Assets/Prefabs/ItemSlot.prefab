@@ -247,10 +247,13 @@ MonoBehaviour:
   useButtonSprite: {fileID: 21300000, guid: 15de4fa19205c3d479e498a9d961b7f2, type: 3}
   combineButtonSprite: {fileID: 21300000, guid: 3eb365becc976274fab709eb98e7496b,
     type: 3}
+  separateButtonSprite: {fileID: 21300000, guid: 9f1df2a06708fa54597acab980610f2f,
+    type: 3}
   interactionButtons:
   - {fileID: 455573385217740969}
   - {fileID: 1713645221709470862}
   - {fileID: 3449786291066382543}
+  dataOfItemInSlot: {fileID: 0}
 --- !u!1 &2376941629119135592
 GameObject:
   m_ObjectHideFlags: 0

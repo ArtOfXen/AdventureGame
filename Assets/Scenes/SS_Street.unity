@@ -4836,7 +4836,10 @@ MonoBehaviour:
   pickUpButtonSprite: {fileID: 21300000, guid: f5271e52aaca0ce4c8a813a6d48aa861, type: 3}
   talkToButtonSprite: {fileID: 21300000, guid: 2a3005dc728c5a3419d9d64e612bf6ad, type: 3}
   goToButtonSprite: {fileID: 21300000, guid: 9f93da6006d2eee468fb890db497e94c, type: 3}
-  combineButtonSprite: {fileID: 0}
+  combineButtonSprite: {fileID: 21300000, guid: 3eb365becc976274fab709eb98e7496b,
+    type: 3}
+  separateButtonSprite: {fileID: 21300000, guid: 9f1df2a06708fa54597acab980610f2f,
+    type: 3}
 --- !u!114 &887884967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5991,7 +5994,7 @@ GameObject:
   - component: {fileID: 1204342801}
   - component: {fileID: 1204342806}
   - component: {fileID: 808142880}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}

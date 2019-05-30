@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorName: Filled Letterbox
   examineText: There's a ball in there.
-  interactionsOtherThanExamine_worldObject: 
+  interactionsOtherThanExamine_worldObject: 06000000
   worldPosition: {x: 0, y: 0, z: 0}
   inventoryImage: {fileID: 0}
   interactionsOtherThanExamine_inventoryItem: 

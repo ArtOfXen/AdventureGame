@@ -56,10 +56,10 @@ public class GameManagerScript : MonoBehaviour
         }
 
         // remove actors if necessary
-        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForThisActor == ActorData.ActorOutcome.Deactivate)
+        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForThisActor == ActorData.ActorOutcomeAfterCombination.Deactivate)
             FindObjectOfType<InventoryScript>().removeItem(firstActorData);
 
-        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForOtherActor == ActorData.ActorOutcome.Deactivate)
+        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForOtherActor == ActorData.ActorOutcomeAfterCombination.Deactivate)
             currentScene.deactivateWorldObject(worldObjectCombinedWith.gameObject);
 
         resolveComination(firstActorData, secondActorData, indexOfSecondActor);
@@ -99,9 +99,9 @@ public class GameManagerScript : MonoBehaviour
         }
 
         // remove actors if necessary
-        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForThisActor == ActorData.ActorOutcome.Deactivate)
+        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForThisActor == ActorData.ActorOutcomeAfterCombination.Deactivate)
             FindObjectOfType<InventoryScript>().removeItem(firstActorData);
-        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForOtherActor == ActorData.ActorOutcome.Deactivate)
+        if (firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].outcomeForOtherActor == ActorData.ActorOutcomeAfterCombination.Deactivate)
             FindObjectOfType<InventoryScript>().removeItem(secondActorData);
 
         resolveComination(firstActorData, secondActorData, indexOfSecondActor);
@@ -137,9 +137,11 @@ public class GameManagerScript : MonoBehaviour
                 FindObjectOfType<InventoryScript>().addItem(firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].newActorToCreate);
                 break;
 
+
             case ActorData.CombinationType.CreateNewPermanentWorldObject:
                 currentScene.activateWorldObject(firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].newActorToCreate);
                 break;
+
 
             case ActorData.CombinationType.CreateNewTemporaryInventoryItem:
                 FindObjectOfType<InventoryScript>().addItem(firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].newActorToCreate);
@@ -148,6 +150,7 @@ public class GameManagerScript : MonoBehaviour
                 ActorData[] componentsOfNewItem = { firstActorData, secondActorData };
                 firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].newActorToCreate.setComponents(componentsOfNewItem);
                 break;
+
 
             case ActorData.CombinationType.CreateNewTemporaryWorldObject:
                 currentScene.activateWorldObject(firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].newActorToCreate);
@@ -158,8 +161,10 @@ public class GameManagerScript : MonoBehaviour
 
                 break;
 
+
             case ActorData.CombinationType.StartConversation:
                 break;
+
 
             default:
                 break;
@@ -168,10 +173,67 @@ public class GameManagerScript : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().checkIfMouseHighlightingObject();
     }
 
-    public bool seperateActor() // splits previously combined actor into components
+    public bool separateActor(InteractableObjectScript worldObjectToSeparate) 
     {
+        // splits previously combined world object into components
+
+        ActorData objectToSeparateData = worldObjectToSeparate.data;
+
+        if (!resolveSeparation(objectToSeparateData))
+            return false; // return false if separation is not possible
+        
+        currentScene.deactivateWorldObject(worldObjectToSeparate.gameObject);
 
         return true;
     }
 
+    public bool separateActor(ItemInteractionScript inventoryItemToSeparate)
+    {
+        // splits previously combined inventory item into components
+
+        ActorData objectToSeparateData = inventoryItemToSeparate.dataOfItemInSlot;
+
+        FindObjectOfType<InventoryScript>().removeItem(objectToSeparateData);
+
+        if (!resolveSeparation(objectToSeparateData))
+        {
+            Debug.Log("separation failed");
+            FindObjectOfType<InventoryScript>().addItem(objectToSeparateData);
+            return false; // return false and readd removed item if separation is not possible
+        }
+
+        return true;
+    }
+
+    private bool resolveSeparation(ActorData actorToSeparate)
+    {
+        ActorData[] actorsToCreate = actorToSeparate.getComponents();
+        // check if actor can be separated
+        if (actorsToCreate.Length == 0)
+            return false;
+
+        for (int i = 0; i < actorsToCreate.Length; i++)
+        {
+            Debug.Log("create actor number " + i);
+            bool actorIsWorldObject = false;
+
+            for (int j = 0; j < currentScene.inactiveWorldObjects.Count; j++)
+            {
+                if (actorsToCreate[i].actorName == currentScene.inactiveWorldObjects[j].GetComponent<InteractableObjectScript>().data.actorName)
+                {
+                    actorIsWorldObject = true;
+                    currentScene.activateWorldObject(actorsToCreate[i]);
+                    break;
+                }
+            }
+
+            if (!actorIsWorldObject)
+            {
+                Debug.Log("add to inventory: actor number " + i);
+                FindObjectOfType<InventoryScript>().addItem(actorsToCreate[i]);
+            }
+        }
+
+        return true;
+    }
 }

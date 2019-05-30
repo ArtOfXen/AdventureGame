@@ -14,7 +14,7 @@ public class InteractableObjectScript : MonoBehaviour
         TalkTo,
         GoTo,
         Combine,
-        Seperate,
+        Separate,
     }
 
     public ActorData data;
@@ -84,6 +84,10 @@ public class InteractableObjectScript : MonoBehaviour
 
             case InteractionType.GoTo:
                 GetComponent<GoToNewAreaTriggerScript>().goToNewArea();
+                break;
+
+            case InteractionType.Separate:
+                FindObjectOfType<GameManagerScript>().separateActor(this);
                 break;
         }
     }

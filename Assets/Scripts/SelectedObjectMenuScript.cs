@@ -19,6 +19,7 @@ public class SelectedObjectMenuScript : MonoBehaviour
     public Sprite talkToButtonSprite;
     public Sprite goToButtonSprite;
     public Sprite combineButtonSprite;
+    public Sprite separateButtonSprite;
 
     private GameObject player;
 
@@ -82,6 +83,9 @@ public class SelectedObjectMenuScript : MonoBehaviour
 
                 case InteractableObjectScript.InteractionType.Use:
                     interactionButtons[i].GetComponent<Image>().sprite = useButtonSprite; break;
+
+                case InteractableObjectScript.InteractionType.Separate:
+                    interactionButtons[i].GetComponent<Image>().sprite = separateButtonSprite; break;
             }
 
             if (objectScript.numberOfInteractions == 2)

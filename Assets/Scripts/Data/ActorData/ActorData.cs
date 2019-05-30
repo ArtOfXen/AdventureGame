@@ -14,7 +14,7 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
         StartConversation,
     }
 
-    public enum ActorOutcome
+    public enum ActorOutcomeAfterCombination
     {
         Deactivate,
         Unchanged
@@ -25,11 +25,10 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
     {
         public ActorData actorData;
         public CombinationType combinationType;
-        public ActorOutcome outcomeForThisActor;
-        public ActorOutcome outcomeForOtherActor;
+        public ActorOutcomeAfterCombination outcomeForThisActor;
+        public ActorOutcomeAfterCombination outcomeForOtherActor;
         public ActorData newActorToCreate;
     }
-
 
     public string actorName;
     public string examineText;
@@ -45,6 +44,7 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
     public void setComponents(ActorData[] actorsUsedToCreateThis)
     {
         components = actorsUsedToCreateThis;
+        Debug.Log("Components added to " + actorName);
     }
 
     public ActorData[] getComponents()
