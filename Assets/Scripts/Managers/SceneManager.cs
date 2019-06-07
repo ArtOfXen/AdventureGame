@@ -9,10 +9,12 @@ public class SceneManager : MonoBehaviour
     public List<GameObject> activeWorldObjects;
     public List<GameObject> inactiveWorldObjects;
 
+    public List<string> testList;
+    public List<string> testList2;
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame

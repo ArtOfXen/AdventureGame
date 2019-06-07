@@ -180,7 +180,10 @@ public class GameManagerScript : MonoBehaviour
         ActorData objectToSeparateData = worldObjectToSeparate.data;
 
         if (!resolveSeparation(objectToSeparateData))
+        {
+            Debug.Log("separation failed");
             return false; // return false if separation is not possible
+        }
         
         currentScene.deactivateWorldObject(worldObjectToSeparate.gameObject);
 
@@ -214,7 +217,6 @@ public class GameManagerScript : MonoBehaviour
 
         for (int i = 0; i < actorsToCreate.Length; i++)
         {
-            Debug.Log("create actor number " + i);
             bool actorIsWorldObject = false;
 
             for (int j = 0; j < currentScene.inactiveWorldObjects.Count; j++)
@@ -229,7 +231,6 @@ public class GameManagerScript : MonoBehaviour
 
             if (!actorIsWorldObject)
             {
-                Debug.Log("add to inventory: actor number " + i);
                 FindObjectOfType<InventoryScript>().addItem(actorsToCreate[i]);
             }
         }
