@@ -163,6 +163,7 @@ public class GameManagerScript : MonoBehaviour
 
 
             case ActorData.CombinationType.StartConversation:
+                Debug.Log("Start Conversation");
                 break;
 
 

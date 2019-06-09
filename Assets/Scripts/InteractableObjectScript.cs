@@ -27,6 +27,11 @@ public class InteractableObjectScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Setup();
+    }
+
+    public void Setup()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
         //numberOfInteractions = interactions.Length;
         numberOfInteractions = data.interactionsOtherThanExamine_worldObject.Length + 1;
