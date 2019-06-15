@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166830226f6c6fe4898c4613eb30dec7, type: 3}
+  m_Name: TestConversation
+  m_EditorClassIdentifier: 
+  conversationID: 0
+  itemReactions: []
+  dialogue:
+  - dialogueID: 0
+    nextDialogueID: 1
+    previousDialogueID: -1
+    dialogueLines:
+    - text: Hello!
+      leftCharacterIsSpeaking: 0
+    - text: Pick a number!
+      leftCharacterIsSpeaking: 0
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 1
+    decisions:
+    - idOfNextDialogueExcerpt: 1
+      text: Four!
+      unlocked: 1
+    - idOfNextDialogueExcerpt: 2
+      text: Eight!
+      unlocked: 1
+    - idOfNextDialogueExcerpt: 3
+      text: Fifteen!
+      unlocked: 1
+    endOfConversation: 0
+  - dialogueID: 1
+    nextDialogueID: -1
+    previousDialogueID: 0
+    dialogueLines:
+    - text: That's a shit number...
+      leftCharacterIsSpeaking: 0
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 1
+  - dialogueID: 2
+    nextDialogueID: -1
+    previousDialogueID: 0
+    dialogueLines:
+    - text: That's a slightly less shit number...
+      leftCharacterIsSpeaking: 0
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 1
+  - dialogueID: 3
+    nextDialogueID: -1
+    previousDialogueID: 0
+    dialogueLines:
+    - text: Why?
+      leftCharacterIsSpeaking: 0
+    - text: Why not?
+      leftCharacterIsSpeaking: 1
+    - text: Meh...
+      leftCharacterIsSpeaking: 0
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 1
+  - dialogueID: 4
+    nextDialogueID: -1
+    previousDialogueID: -1
+    dialogueLines:
+    - text: I found this ball.
+      leftCharacterIsSpeaking: 1
+    - text: Good for you.
+      leftCharacterIsSpeaking: 0
+    - text: '...'
+      leftCharacterIsSpeaking: 0
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 1

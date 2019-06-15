@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HoveredObjectName_UIText
   - SelectedObjectMenu_UIText
+  - ConversationUI
   layers:
   - Default
   - TransparentFX

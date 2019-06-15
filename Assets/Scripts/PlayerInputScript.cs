@@ -103,7 +103,8 @@ public class PlayerInputScript : MonoBehaviour
             // if menu is open and player clicks outside of menu area, close menu
             else if (aSelectionMenuIsOpen) closeCurrentSelectionMenu();
 
-            else if (!mouseOverUI) destinationPosition = getMousePositionInWorld(); // TODO: cast mouse ray and only set destination position if ray hits ground
+            else if (!mouseOverUI)
+                destinationPosition = getMousePositionInWorld(); // TODO: cast mouse ray and only set destination position if ray hits ground
         }
 
         // update highlighted object UI
@@ -227,7 +228,7 @@ public class PlayerInputScript : MonoBehaviour
             Vector3 mousePositionInWorld = mouseRayHit.point;
             return new Vector3(mousePositionInWorld.x, transform.position.y, mousePositionInWorld.z);
         }
-        else { return destinationPosition; } // if no hit found, don't change destination
+        else { Debug.Log(destinationPosition); return destinationPosition; } // if no hit found, don't change destination
     }
 
     public void stopHighlightingWorldObject(InteractableObjectScript worldObject)
