@@ -47,9 +47,12 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
         if (inventory.items[itemSlotIndex] != null)
         {
             dataOfItemInSlot = inventory.items[itemSlotIndex];
-            itemNameUI.text = dataOfItemInSlot.actorName;
             itemNameUI.enabled = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().setHighlightedInventoryItem(this);
+            if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+                itemNameUI.text = "Show " + dataOfItemInSlot.actorName;
+            else
+                itemNameUI.text = dataOfItemInSlot.actorName;
         }
         mouseOver = true;
     }

@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: TestConversation
   m_EditorClassIdentifier: 
   conversationID: 0
-  itemReactions: []
+  itemReactions:
+  - item: {fileID: 11400000, guid: 032cc44a7ff0098418c05a83f7d0f06d, type: 2}
+    idOfDialogueExcerpt: 4
+    unlocked: 1
   dialogue:
   - dialogueID: 0
-    nextDialogueID: 1
+    nextDialogueID: -1
     previousDialogueID: -1
     dialogueLines:
     - text: Hello!

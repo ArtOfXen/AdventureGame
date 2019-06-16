@@ -27,7 +27,7 @@ public class CharacterScript : InteractableObjectScript
         {
             case InteractionType.TalkTo:
                 Debug.Log("Object Talked t... wait, object??");
-                GameObject.FindGameObjectWithTag("ConversationUI").GetComponent<ConversationScript>().openConversation(null, loadedConversation);
+                FindObjectOfType<GameManagerScript>().conversationUI.GetComponent<ConversationScript>().openConversation(null, loadedConversation);
                 break;
         }
     }

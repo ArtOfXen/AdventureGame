@@ -29,8 +29,3 @@ MonoBehaviour:
     outcomeForThisActor: 0
     outcomeForOtherActor: 0
     newActorToCreate: {fileID: 11400000, guid: 184d83881d673934d9a03acaf11d44de, type: 2}
-  - actorData: {fileID: 11400000, guid: 59dae47e1e8a2ae41a0bfa6d5cf85c80, type: 2}
-    combinationType: 4
-    outcomeForThisActor: 1
-    outcomeForOtherActor: 1
-    newActorToCreate: {fileID: 0}

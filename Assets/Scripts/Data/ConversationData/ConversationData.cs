@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ConversationData : ScriptableObject
 {
+
+    public enum ItemInteractionType { show, give} // 'show' keeps item, while 'give' removes it from inventory
+
     [System.Serializable]
     public struct Decision // an option that appears on the buttons below the conversation text
     {
@@ -17,7 +20,8 @@ public class ConversationData : ScriptableObject
     public struct ItemReaction // what happens when the player gives/shows an item to the character
     {
         public ActorData item;
-        public int ifOfDialogueExcerpt; // excerpt to go to if this item is used
+        public ItemInteractionType interactionType;
+        public int idOfDialogueExcerpt; // excerpt to go to if this item is used
         public bool unlocked;// can lock item until certain events happen
     }
 

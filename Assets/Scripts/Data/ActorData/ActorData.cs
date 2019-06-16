@@ -11,7 +11,6 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
         CreateNewPermanentWorldObject,
         CreateNewTemporaryInventoryItem,
         CreateNewTemporaryWorldObject,
-        StartConversation,
     }
 
     public enum ActorOutcomeAfterCombination

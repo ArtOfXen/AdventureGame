@@ -90,13 +90,20 @@ public class PlayerInputScript : MonoBehaviour
             // if inventory item is highlighted, that means the mouse is over it. Therefore, the player has clicked on it
             else if (highlightedInventoryItem != null)
             {
-                if (highlightedInventoryItem == selectedInventoryItem)
+                if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
                 {
-                    closeCurrentSelectionMenu();
+                    FindObjectOfType<GameManagerScript>().conversationUI.GetComponent<ConversationScript>().showInventoryItem(highlightedInventoryItem.dataOfItemInSlot);
                 }
                 else
                 {
-                    inventoryItemClickedOn(highlightedInventoryItem);
+                    if (highlightedInventoryItem == selectedInventoryItem)
+                    {
+                        closeCurrentSelectionMenu();
+                    }
+                    else
+                    {
+                        inventoryItemClickedOn(highlightedInventoryItem);
+                    }
                 }
             }
 
@@ -228,7 +235,8 @@ public class PlayerInputScript : MonoBehaviour
             Vector3 mousePositionInWorld = mouseRayHit.point;
             return new Vector3(mousePositionInWorld.x, transform.position.y, mousePositionInWorld.z);
         }
-        else { Debug.Log(destinationPosition); return destinationPosition; } // if no hit found, don't change destination
+        else
+            return destinationPosition; // if no hit found, don't change destination
     }
 
     public void stopHighlightingWorldObject(InteractableObjectScript worldObject)
