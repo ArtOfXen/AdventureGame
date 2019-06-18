@@ -15,8 +15,11 @@ MonoBehaviour:
   conversationID: 0
   itemReactions:
   - item: {fileID: 11400000, guid: 032cc44a7ff0098418c05a83f7d0f06d, type: 2}
+    interactionType: 0
     idOfDialogueExcerpt: 4
     unlocked: 1
+    changeDialogueAfterShown: 1
+    idOfNewDialogueAfterShown: 5
   dialogue:
   - dialogueID: 0
     nextDialogueID: -1
@@ -92,3 +95,14 @@ MonoBehaviour:
     decisionCanBeMade: 0
     decisions: []
     endOfConversation: 1
+  - dialogueID: 5
+    nextDialogueID: 0
+    previousDialogueID: -1
+    dialogueLines:
+    - text: I already showed her that. She didn't seem very impressed...
+      leftCharacterIsSpeaking: 1
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 0

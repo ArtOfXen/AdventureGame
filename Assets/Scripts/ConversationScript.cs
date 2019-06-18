@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class ConversationScript : MonoBehaviour
 {
-    private enum CauseOfDialogueChange
-    { next, previous }
+    //private enum CauseOfDialogueChange
+    //{ next, previous }
 
     public ConversationData currentConversation;
     ConversationData.DialogueExcerpt currentDialogueExcerpt;
     int currentDialogueLineIndex;
 
-    public Button previousButton;
+    //public Button previousButton;
     public Button nextButton;
     public Image leftConversationalistSprite;
     public Image rightConversationalistSprite;
@@ -22,42 +22,59 @@ public class ConversationScript : MonoBehaviour
     public Button[] decisionButtons;
     int[] dialogueLineIDsForDecisionButtons;
 
-    private bool onFirstLineOfConversation;
+    //private bool onFirstLineOfConversation;
+    private bool onIrrelevantItemLine;
+    private bool itemWasJustShown;
+    private ConversationData.ItemReaction itemBeingShown;
 
     private void Start()
     {
         areDecisionButtonsActive = false;
-        onFirstLineOfConversation = true;
+        //onFirstLineOfConversation = true;
+        onIrrelevantItemLine = false;
+        itemWasJustShown = false;
         dialogueLineIDsForDecisionButtons = new int[4];
     }
 
     public void openConversation(ActorData itemCombinedWithCharacter, ConversationData newConversation)
     {
-        int indexOfRelevantItem = findDialogueIndexforItem(itemCombinedWithCharacter);
+        int indexOfItemCombined = findIndexOfReactionItem(itemCombinedWithCharacter);
 
         currentConversation = newConversation;
 
         gameObject.SetActive(true);
         nextButton.gameObject.SetActive(true);
-        previousButton.gameObject.SetActive(true);
+        //previousButton.gameObject.SetActive(true);
         nextButton.GetComponentInChildren<Text>().text = "Next";
-        previousButton.GetComponentInChildren<Text>().text = "Exit";
+        //previousButton.GetComponentInChildren<Text>().text = "Exit";
 
         areDecisionButtonsActive = false;
-        onFirstLineOfConversation = true;
+        //onFirstLineOfConversation = true;
+        itemWasJustShown = false;
 
         GameManagerScript gmScript = FindObjectOfType<GameManagerScript>();
-        gmScript.fadeIn_Conversation();
+        gmScript.fadeOut_Conversation();
         gmScript.ConversationUIOpen = true;
 
-        if (indexOfRelevantItem < 0)
-            changeDialogueExcerpt(0, CauseOfDialogueChange.next);
+        if (indexOfItemCombined < 0)
+            changeDialogueExcerpt(0);
         else
-            changeDialogueExcerpt(indexOfRelevantItem, CauseOfDialogueChange.next);
+            changeDialogueExcerpt(currentConversation.itemReactions[indexOfItemCombined].idOfDialogueExcerpt);
     }
 
-    void changeDialogueExcerpt(int indexOfDialogueExcerpt, CauseOfDialogueChange causeOfExcerptChange)
+    void changeDialogueExcerpt(int indexOfDialogueExcerpt)
     {
+        if (itemWasJustShown)
+        {
+            if (itemBeingShown.changeDialogueAfterShown)
+            {
+                Debug.Log("Change item dialogue");
+                currentConversation.itemReactions[findIndexOfReactionItem(itemBeingShown.item)].idOfDialogueExcerpt = itemBeingShown.idOfNewDialogueAfterShown;
+                //itemBeingShown.idOfDialogueExcerpt = itemBeingShown.idOfNewDialogueAfterShown;
+                Debug.Log(currentConversation.dialogue[itemBeingShown.idOfDialogueExcerpt].dialogueLines[0].text);
+                itemWasJustShown = false;
+            }
+        }
         currentDialogueExcerpt = currentConversation.dialogue[indexOfDialogueExcerpt];
 
         // if wrong excerpt was found, look for it manually
@@ -76,14 +93,13 @@ public class ConversationScript : MonoBehaviour
         leftConversationalistSprite.sprite = currentDialogueExcerpt.leftCharacter.sprite;
         rightConversationalistSprite.sprite = currentDialogueExcerpt.rightCharacter.sprite;
 
-        if (causeOfExcerptChange == CauseOfDialogueChange.next)
-            changeDialogueLine(0, causeOfExcerptChange); // set to first line of excerpt
+        changeDialogueLine(0); // show first line of new excerpt
 
-        else if (causeOfExcerptChange == CauseOfDialogueChange.previous)
-            changeDialogueLine(currentDialogueExcerpt.dialogueLines.Length - 1, causeOfExcerptChange); // set to last line of excerpt
+        //else if (causeOfExcerptChange == CauseOfDialogueChange.previous)
+        //    changeDialogueLine(currentDialogueExcerpt.dialogueLines.Length - 1, causeOfExcerptChange); // set to last line of excerpt
     }
 
-    private void changeDialogueLine(int indexOfDialogueLine, CauseOfDialogueChange causeOfLineChange)
+    private void changeDialogueLine(int indexOfDialogueLine)
     {
         ConversationData.DialogueLine newLine = currentDialogueExcerpt.dialogueLines[indexOfDialogueLine];
         currentDialogueLineIndex = indexOfDialogueLine;
@@ -140,12 +156,6 @@ public class ConversationScript : MonoBehaviour
                 }
                 else
                     nextButton.gameObject.SetActive(false);
-
-                if (currentDialogueExcerpt.previousDialogueID < 0)
-                {
-                    // disable previousButton, because in this case, both next and previous buttons would show 'Exit'
-                    previousButton.gameObject.SetActive(false);
-                }
             }
         }
 
@@ -154,92 +164,103 @@ public class ConversationScript : MonoBehaviour
             nextButton.GetComponentInChildren<Text>().text = "Next";
             nextButton.gameObject.SetActive(true);
         }
-
-        // only need to change the previous button if the previous button is pressed.
-        if (causeOfLineChange == CauseOfDialogueChange.previous)
-        {
-            previousButton.gameObject.SetActive(true);
-            if (currentDialogueExcerpt.previousDialogueID < 0 && currentDialogueLineIndex <= 0)
-            {
-                onFirstLineOfConversation = true;
-                previousButton.GetComponentInChildren<Text>().text = "Exit";
-            }
-            else
-                previousButton.GetComponentInChildren<Text>().text = "Previous";
-        }
     }
 
     public void nextButtonPressed()
     {
-        if (onFirstLineOfConversation)
+        if (onIrrelevantItemLine)
         {
-            previousButton.GetComponentInChildren<Text>().text = "Previous";
-            onFirstLineOfConversation = false;
-        }
-
-        if (currentDialogueLineIndex < currentDialogueExcerpt.dialogueLines.Length - 1)
-            changeDialogueLine(currentDialogueLineIndex + 1, CauseOfDialogueChange.next);
-        else
-        {
-            if (currentDialogueExcerpt.nextDialogueID < 0)
-            {
-                exitConversation();
-            }
-            else
-                changeDialogueExcerpt(currentDialogueExcerpt.nextDialogueID, CauseOfDialogueChange.next);
-        }
-    }
-
-    public void previousButtonPressed()
-    {
-        if (areDecisionButtonsActive)
-        {
-            disableDecisionButtons();
-        }
-
-        if (currentDialogueLineIndex > 0)
-        {
-            changeDialogueLine(currentDialogueLineIndex - 1, CauseOfDialogueChange.previous);
+            onIrrelevantItemLine = false;
+            changeDialogueLine(currentDialogueLineIndex);
         }
         else
         {
-            if (currentDialogueExcerpt.previousDialogueID < 0)
-            {
-                exitConversation();
-            }
+            if (currentDialogueLineIndex < currentDialogueExcerpt.dialogueLines.Length - 1)
+                changeDialogueLine(currentDialogueLineIndex + 1);
             else
-                changeDialogueExcerpt(currentDialogueExcerpt.previousDialogueID, CauseOfDialogueChange.previous);
+            {
+                if (currentDialogueExcerpt.nextDialogueID < 0)
+                {
+                    exitConversation();
+                }
+                else
+                    changeDialogueExcerpt(currentDialogueExcerpt.nextDialogueID);
+            }
         }
     }
+
+    //public void previousButtonPressed()
+    //{
+    //    if (onIrrelevantItemLine)
+    //    {
+    //        onIrrelevantItemLine = false;
+    //        changeDialogueExcerpt(currentDialogueLineIndex, CauseOfDialogueChange.next);
+    //    }
+    //    else
+    //    {
+    //        if (areDecisionButtonsActive)
+    //        {
+    //            disableDecisionButtons();
+    //        }
+
+    //        if (currentDialogueLineIndex > 0)
+    //        {
+    //            changeDialogueLine(currentDialogueLineIndex - 1, CauseOfDialogueChange.previous);
+    //        }
+    //        else
+    //        {
+    //            if (currentDialogueExcerpt.previousDialogueID < 0)
+    //            {
+    //                exitConversation();
+    //            }
+    //            else
+    //                changeDialogueExcerpt(currentDialogueExcerpt.previousDialogueID, CauseOfDialogueChange.previous);
+    //        }
+    //    }
+    //}
 
     public void decisionButtonPressed(int indexOfButton)
     {
-        changeDialogueExcerpt(dialogueLineIDsForDecisionButtons[indexOfButton], CauseOfDialogueChange.next);
+        changeDialogueExcerpt(dialogueLineIDsForDecisionButtons[indexOfButton]);
         disableDecisionButtons();
     }
 
     public void showInventoryItem(ActorData itemShown)
     {
+        disableDecisionButtons();
+
         // returns -1 if not found
-        int dialogueIndexForItem = findDialogueIndexforItem(itemShown);
-        if (dialogueIndexForItem > -1)
+        int indexOfItemShown = findIndexOfReactionItem(itemShown);
+        
+        if (indexOfItemShown > -1)
         {
-            disableDecisionButtons();
-            if (currentConversation.itemReactions[dialogueIndexForItem].interactionType == ConversationData.ItemInteractionType.give)
+            itemBeingShown = currentConversation.itemReactions[indexOfItemShown];
+            itemWasJustShown = true;
+            if (itemBeingShown.interactionType == ConversationData.ItemInteractionType.give)
                 FindObjectOfType<InventoryScript>().removeItem(itemShown);
-            changeDialogueExcerpt(dialogueIndexForItem, CauseOfDialogueChange.next);
+            changeDialogueExcerpt(itemBeingShown.idOfDialogueExcerpt);
         }
         else
         {
-            Debug.Log("item not found");
-            // TODO: SOME KIND OF FEEDBACK ABOUT NOT SHOWING THEM THIS ITEM
-            // If character.gender == 'm'
-            //     Player says “I don’t want to talk to him about that.”
-            // Else Player says “I don’t want to talk to her about that.”
+            onIrrelevantItemLine = true;
+            leftConversationalistSprite.color = new Color(255, 255, 255);
+            rightConversationalistSprite.color = new Color(135, 135, 135);
+            leftConversationalistSprite.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+            rightConversationalistSprite.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
+
+            nextButton.gameObject.SetActive(true);
+            nextButton.GetComponentInChildren<Text>().text = "Next";
+
+            if (currentDialogueExcerpt.rightCharacter.gender == 'f')
+                conversationText.text = "I don't want to show her that.";
+            else if (currentDialogueExcerpt.rightCharacter.gender == 'm')
+                conversationText.text = "I don't want to show him that.";
+            else
+                conversationText.text = "I don't want to show them that.";
         }
     }
 
-    private int findDialogueIndexforItem(ActorData item)
+    private int findIndexOfReactionItem(ActorData item)
     {
         if (item != null)
         {
@@ -247,7 +268,7 @@ public class ConversationScript : MonoBehaviour
             {
                 if (currentConversation.itemReactions[i].item.Equals(item))
                 {
-                    return currentConversation.itemReactions[i].idOfDialogueExcerpt;
+                    return i;
                 }
             }
         }

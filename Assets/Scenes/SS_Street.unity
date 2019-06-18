@@ -2584,7 +2584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &429785496
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7251,7 +7251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentConversation: {fileID: 0}
-  previousButton: {fileID: 429785497}
   nextButton: {fileID: 267555428}
   leftConversationalistSprite: {fileID: 1423617014}
   rightConversationalistSprite: {fileID: 1952216295}

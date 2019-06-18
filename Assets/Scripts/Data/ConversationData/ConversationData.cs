@@ -23,6 +23,8 @@ public class ConversationData : ScriptableObject
         public ItemInteractionType interactionType;
         public int idOfDialogueExcerpt; // excerpt to go to if this item is used
         public bool unlocked;// can lock item until certain events happen
+        public bool changeDialogueAfterShown; // after character is shown this item, the text for the item will change
+        public int idOfNewDialogueAfterShown; // new dialogue after being shown.
     }
 
     [System.Serializable]
