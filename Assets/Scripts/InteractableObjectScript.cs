@@ -27,6 +27,11 @@ public class InteractableObjectScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Setup();
+    }
+
+    public void Setup()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
         //numberOfInteractions = interactions.Length;
         numberOfInteractions = data.interactionsOtherThanExamine_worldObject.Length + 1;
@@ -58,7 +63,7 @@ public class InteractableObjectScript : MonoBehaviour
         player.GetComponent<PlayerInputScript>().stopHighlightingWorldObject(this);
     }
 
-    public void doAction(InteractionType interaction)
+    public virtual void doAction(InteractionType interaction)
     {
         switch (interaction)
         {
@@ -76,10 +81,6 @@ public class InteractableObjectScript : MonoBehaviour
                 PlayerInputScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>();
                 playerScript.stopHighlightingWorldObject(this);
                 GetComponent<PickUpObjectScript>().addItemToInventory();
-                break;
-
-            case InteractionType.TalkTo:
-                Debug.Log("Object Talked t... wait, object??");
                 break;
 
             case InteractionType.GoTo:

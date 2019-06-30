@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
-
+    public Image fadeOutImage_exclUI;
+    public Image fadeOutImage_inclUI;
+    public GameObject conversationUI;
     [HideInInspector] public SceneManager currentScene;
 
     public SceneManager[] allScenes;
+
+    private Color fadeOutImageColour;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +21,10 @@ public class GameManagerScript : MonoBehaviour
 
         // FOR TESTING PURPOSES
         currentScene = allScenes[0];
+
+        ConversationUIOpen = false;
+
+        fadeOutImageColour = fadeOutImage_exclUI.color;
     }
 
     // Update is called once per frame
@@ -23,6 +32,29 @@ public class GameManagerScript : MonoBehaviour
     {
         
     }
+
+    public bool ConversationUIOpen { get; set; }
+
+    public void fadeOut_Conversation()
+    {
+        fadeOutImage_exclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0.5f);
+    }
+
+    public void fadeIn_Conversation()
+    {
+        fadeOutImage_exclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0);
+    }
+
+    public void fadeOut_ChangeLocation()
+    {
+        fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 1f);
+    }
+
+    public void fadeIn_ChangeLocation()
+    {
+        fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0);
+    }
+
 
     public bool combineActors(ItemInteractionScript inventorySlotOfFirstItem, InteractableObjectScript worldObjectCombinedWith)
     {
@@ -158,11 +190,6 @@ public class GameManagerScript : MonoBehaviour
                 // add components so combination can be reversed
                 ActorData[] componentsOfNewObject = { firstActorData, secondActorData };
                 firstActorData.actorsThisCanBeCombinedWith[indexOfSecondActor].newActorToCreate.setComponents(componentsOfNewObject);
-
-                break;
-
-
-            case ActorData.CombinationType.StartConversation:
                 break;
 
 
@@ -180,7 +207,10 @@ public class GameManagerScript : MonoBehaviour
         ActorData objectToSeparateData = worldObjectToSeparate.data;
 
         if (!resolveSeparation(objectToSeparateData))
+        {
+            Debug.Log("separation failed");
             return false; // return false if separation is not possible
+        }
         
         currentScene.deactivateWorldObject(worldObjectToSeparate.gameObject);
 
@@ -214,7 +244,6 @@ public class GameManagerScript : MonoBehaviour
 
         for (int i = 0; i < actorsToCreate.Length; i++)
         {
-            Debug.Log("create actor number " + i);
             bool actorIsWorldObject = false;
 
             for (int j = 0; j < currentScene.inactiveWorldObjects.Count; j++)
@@ -229,7 +258,6 @@ public class GameManagerScript : MonoBehaviour
 
             if (!actorIsWorldObject)
             {
-                Debug.Log("add to inventory: actor number " + i);
                 FindObjectOfType<InventoryScript>().addItem(actorsToCreate[i]);
             }
         }

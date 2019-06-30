@@ -11,7 +11,6 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
         CreateNewPermanentWorldObject,
         CreateNewTemporaryInventoryItem,
         CreateNewTemporaryWorldObject,
-        StartConversation,
     }
 
     public enum ActorOutcomeAfterCombination
@@ -44,7 +43,6 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
     public void setComponents(ActorData[] actorsUsedToCreateThis)
     {
         components = actorsUsedToCreateThis;
-        Debug.Log("Components added to " + actorName);
     }
 
     public ActorData[] getComponents()
