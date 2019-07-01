@@ -90,7 +90,8 @@ public class PlayerInputScript : MonoBehaviour
             // if inventory item is highlighted, that means the mouse is over it. Therefore, the player has clicked on it
             else if (highlightedInventoryItem != null)
             {
-                if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+                // don't show item in conversation if item is the notebook, we need to open/close the notebook instead
+                if (FindObjectOfType<GameManagerScript>().ConversationUIOpen && highlightedInventoryItem.itemSlotIndex != 0)
                 {
                     FindObjectOfType<GameManagerScript>().conversationUI.GetComponent<ConversationScript>().showInventoryItem(highlightedInventoryItem.dataOfItemInSlot);
                 }

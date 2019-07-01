@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class InventoryScript : MonoBehaviour
 {
-    public const int inventorySize = 16;
+    public const int INVENTORY_SIZE = 16;
 
-    public Image[] itemImages = new Image[inventorySize];
-    public ActorData[] items = new ActorData[inventorySize];
+    public Image[] itemImages = new Image[INVENTORY_SIZE];
+    public ActorData[] items = new ActorData[INVENTORY_SIZE];
 
 
     public void addItem(ActorData newItem)
     {
-        for (int i = 0; i < items.Length; i++)
+        // start at index 1 because index 0 will always be the notebook
+        for (int i = 1; i < items.Length; i++)
         {
             if (items[i] == null)
             {
@@ -27,7 +28,8 @@ public class InventoryScript : MonoBehaviour
 
     public void removeItem(ActorData itemToRemove)
     {
-        for (int i = 0; i < items.Length; i++)
+        // start at index 1 because index 0 will always be the notebook
+        for (int i = 1; i < items.Length; i++)
         {
             if (items[i] == itemToRemove)
             {

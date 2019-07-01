@@ -8,7 +8,7 @@ public class InventoryEditor : Editor
 {
     private SerializedProperty itemImagesProperty;
     private SerializedProperty itemsProperty;
-    private bool[] showItemSlots = new bool[InventoryScript.inventorySize];
+    private bool[] showItemSlots = new bool[InventoryScript.INVENTORY_SIZE];
 
     private const string inventoryPropItemImagesName = "itemImages";
     private const string inventoryPropItemsName = "items";
@@ -23,7 +23,7 @@ public class InventoryEditor : Editor
     {
         serializedObject.Update();
 
-        for (int i = 0; i < InventoryScript.inventorySize; i++)
+        for (int i = 0; i < InventoryScript.INVENTORY_SIZE; i++)
         {
             itemSlotGUI(i);
         }
