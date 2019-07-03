@@ -54,6 +54,12 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
             else
                 itemNameUI.text = dataOfItemInSlot.actorName;
         }
+        else if (itemSlotIndex == 0)
+        {
+            itemNameUI.text = "Open Notebook";
+            itemNameUI.enabled = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().setHighlightedInventoryItem(this);
+        }
         mouseOver = true;
     }
 
@@ -67,40 +73,50 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void openItemMenu()
     {
-        InteractableObjectScript.InteractionType[] interactionsOtherThanExamine = inventory.items[itemSlotIndex].interactionsOtherThanExamine_inventoryItem;
-        interactions = new InteractableObjectScript.InteractionType[interactionsOtherThanExamine.Length + 1];
-        interactions[0] = InteractableObjectScript.InteractionType.Examine;
-
-        for (int i = 0; i < interactionsOtherThanExamine.Length; i++)
+        if (itemSlotIndex == 0)
         {
-            interactions[i + 1] = interactionsOtherThanExamine[i];
+            // if this item is the notebook
+            FindObjectOfType<GameManagerScript>().notebookUI.SetActive(true);
+            FindObjectOfType<PlayerInputScript>().notebookIsOpen = true;
+            FindObjectOfType<GameManagerScript>().fadeOutBackground();
         }
+        else
+        { 
+            InteractableObjectScript.InteractionType[] interactionsOtherThanExamine = inventory.items[itemSlotIndex].interactionsOtherThanExamine_inventoryItem;
+            interactions = new InteractableObjectScript.InteractionType[interactionsOtherThanExamine.Length + 1];
+            interactions[0] = InteractableObjectScript.InteractionType.Examine;
 
-        for (int i = 0; i < interactions.Length; i++)
-        {
-            interactionButtons[i].GetComponent<Image>().enabled = true;
-
-            switch (interactions[i])
+            for (int i = 0; i < interactionsOtherThanExamine.Length; i++)
             {
-                case InteractableObjectScript.InteractionType.Examine:
-                    interactionButtons[i].GetComponent<Image>().sprite = examineButtonSprite;
-                    break;
-                case InteractableObjectScript.InteractionType.Use:
-                    interactionButtons[i].GetComponent<Image>().sprite = useButtonSprite;
-                    break;
-                case InteractableObjectScript.InteractionType.Combine:
-                    interactionButtons[i].GetComponent<Image>().sprite = combineButtonSprite;
-                    break;
-                case InteractableObjectScript.InteractionType.Separate:
-                    interactionButtons[i].GetComponent<Image>().sprite = separateButtonSprite;
-                    break;
-                default:
-                    Debug.Log("Item in item slot " + itemSlotIndex + " has an incompatable interaction set");
-                    break;
+                interactions[i + 1] = interactionsOtherThanExamine[i];
             }
-        }
 
-        menuOpen = true;
+            for (int i = 0; i < interactions.Length; i++)
+            {
+                interactionButtons[i].GetComponent<Image>().enabled = true;
+
+                switch (interactions[i])
+                {
+                    case InteractableObjectScript.InteractionType.Examine:
+                        interactionButtons[i].GetComponent<Image>().sprite = examineButtonSprite;
+                        break;
+                    case InteractableObjectScript.InteractionType.Use:
+                        interactionButtons[i].GetComponent<Image>().sprite = useButtonSprite;
+                        break;
+                    case InteractableObjectScript.InteractionType.Combine:
+                        interactionButtons[i].GetComponent<Image>().sprite = combineButtonSprite;
+                        break;
+                    case InteractableObjectScript.InteractionType.Separate:
+                        interactionButtons[i].GetComponent<Image>().sprite = separateButtonSprite;
+                        break;
+                    default:
+                        Debug.Log("Item in item slot " + itemSlotIndex + " has an incompatable interaction set");
+                        break;
+                }
+            }
+
+            menuOpen = true;
+        }
     }
 
     public void interactionButtonClicked(int buttonNumber)
@@ -142,14 +158,24 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void closeItemMenu()
     {
-        for (int i = 0; i < interactions.Length; i++)
+        if (itemSlotIndex == 0)
         {
-            interactionButtons[i].GetComponent<Image>().enabled = false;
+            // if this item is the notebook
+            FindObjectOfType<GameManagerScript>().notebookUI.SetActive(false);
+            FindObjectOfType<PlayerInputScript>().notebookIsOpen = false;
+            FindObjectOfType<GameManagerScript>().fadeInBackground();
         }
-        
-        if (!mouseOver)
-            itemNameUI.enabled = false;
+        else
+        {
+            for (int i = 0; i < interactions.Length; i++)
+            {
+                interactionButtons[i].GetComponent<Image>().enabled = false;
+            }
 
-        menuOpen = false;
+            if (!mouseOver)
+                itemNameUI.enabled = false;
+
+            menuOpen = false;
+        }
     }
 }

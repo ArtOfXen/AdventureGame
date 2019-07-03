@@ -69,7 +69,6 @@ public class InteractableObjectScript : MonoBehaviour
         {
             case InteractionType.Examine:
                 player.GetComponent<PlayerInputScript>().enableExamineObjectText(data.examineText);
-                Debug.Log("Object Examined");
                 break;
 
             case InteractionType.Use:
@@ -77,7 +76,6 @@ public class InteractableObjectScript : MonoBehaviour
                 break;
 
             case InteractionType.PickUp:
-                Debug.Log("Object Picked Up");
                 PlayerInputScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>();
                 playerScript.stopHighlightingWorldObject(this);
                 GetComponent<PickUpObjectScript>().addItemToInventory();

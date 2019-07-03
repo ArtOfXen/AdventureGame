@@ -20,6 +20,12 @@ MonoBehaviour:
     unlocked: 1
     changeDialogueAfterShown: 1
     idOfNewDialogueAfterShown: 5
+  - item: {fileID: 11400000, guid: e0598ca57649e974cbaf6fc020ff922d, type: 2}
+    interactionType: 0
+    idOfDialogueExcerpt: 6
+    unlocked: 1
+    changeDialogueAfterShown: 0
+    idOfNewDialogueAfterShown: -1
   dialogue:
   - dialogueID: 0
     nextDialogueID: -1
@@ -96,11 +102,26 @@ MonoBehaviour:
     decisions: []
     endOfConversation: 1
   - dialogueID: 5
-    nextDialogueID: 0
+    nextDialogueID: -1
     previousDialogueID: -1
     dialogueLines:
     - text: I already showed her that. She didn't seem very impressed...
       leftCharacterIsSpeaking: 1
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 0
+  - dialogueID: 6
+    nextDialogueID: -1
+    previousDialogueID: -1
+    dialogueLines:
+    - text: I found these highly illegal drugs. How do you explain this?
+      leftCharacterIsSpeaking: 1
+    - text: I...
+      leftCharacterIsSpeaking: 0
+    - text: Please leave.
+      leftCharacterIsSpeaking: 0
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 0
