@@ -24,6 +24,7 @@ public class InventoryScript : MonoBehaviour
                 return;
             }
         }
+        Debug.Log("Inventory Full. InventoryScript ln27.");
     }
 
     public void removeItem(ActorData itemToRemove)
@@ -39,5 +40,6 @@ public class InventoryScript : MonoBehaviour
                 return;
             }
         }
+        Debug.Log("Item to remove not found. InventoryScript ln43.");
     }
 }

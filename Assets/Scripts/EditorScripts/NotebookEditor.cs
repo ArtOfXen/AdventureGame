@@ -7,13 +7,16 @@ using UnityEditor;
 public class NotebookEditor : Editor
 {
     private SerializedProperty notesProperty;
+    private SerializedProperty noteButtonsProperty;
     private bool[] showNotebookEntries = new bool[NotebookScript.MAXIMUM_NUMBER_OF_NOTES];
 
     private const string notebookPropNotesName = "notes";
+    private const string notebookPropNoteButtonsName = "noteButtonObjects";
 
     private void OnEnable()
     {
         notesProperty = serializedObject.FindProperty(notebookPropNotesName);
+        noteButtonsProperty = serializedObject.FindProperty(notebookPropNoteButtonsName);
     }
 
     public override void OnInspectorGUI()
@@ -38,6 +41,7 @@ public class NotebookEditor : Editor
         if (showNotebookEntries[index])
         {
             EditorGUILayout.PropertyField(notesProperty.GetArrayElementAtIndex(index));
+            EditorGUILayout.PropertyField(noteButtonsProperty.GetArrayElementAtIndex(index));
         }
 
         EditorGUI.indentLevel--;

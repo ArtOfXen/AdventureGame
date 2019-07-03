@@ -53,8 +53,10 @@ public class ConversationScript : MonoBehaviour
         itemWasJustShown = false;
 
         GameManagerScript gmScript = FindObjectOfType<GameManagerScript>();
-        gmScript.fadeOut_Conversation();
+        gmScript.fadeOutBackground();
         gmScript.ConversationUIOpen = true;
+
+        // TODO: HIDE INVENTORY
 
         if (indexOfItemCombined < 0)
             changeDialogueExcerpt(0);
@@ -68,10 +70,8 @@ public class ConversationScript : MonoBehaviour
         {
             if (itemBeingShown.changeDialogueAfterShown)
             {
-                Debug.Log("Change item dialogue");
                 currentConversation.itemReactions[findIndexOfReactionItem(itemBeingShown.item)].idOfDialogueExcerpt = itemBeingShown.idOfNewDialogueAfterShown;
                 //itemBeingShown.idOfDialogueExcerpt = itemBeingShown.idOfNewDialogueAfterShown;
-                Debug.Log(currentConversation.dialogue[itemBeingShown.idOfDialogueExcerpt].dialogueLines[0].text);
                 itemWasJustShown = false;
             }
         }
@@ -153,6 +153,7 @@ public class ConversationScript : MonoBehaviour
                 {
                     nextButton.gameObject.SetActive(true);
                     nextButton.GetComponentInChildren<Text>().text = "Exit";
+                    // TODO: SHOW INVENTORY
                 }
                 else
                     nextButton.gameObject.SetActive(false);
@@ -228,6 +229,7 @@ public class ConversationScript : MonoBehaviour
     public void showInventoryItem(ActorData itemShown)
     {
         disableDecisionButtons();
+        // TODO: HIDE INVENTORY
 
         // returns -1 if not found
         int indexOfItemShown = findIndexOfReactionItem(itemShown);
@@ -252,11 +254,11 @@ public class ConversationScript : MonoBehaviour
             nextButton.GetComponentInChildren<Text>().text = "Next";
 
             if (currentDialogueExcerpt.rightCharacter.gender == 'f')
-                conversationText.text = "I don't want to show her that.";
+                conversationText.text = "I don't want to talk to her about that.";
             else if (currentDialogueExcerpt.rightCharacter.gender == 'm')
-                conversationText.text = "I don't want to show him that.";
+                conversationText.text = "I don't want to talk to him about that.";
             else
-                conversationText.text = "I don't want to show them that.";
+                conversationText.text = "I don't want to talk to them about that.";
         }
     }
 
@@ -287,7 +289,7 @@ public class ConversationScript : MonoBehaviour
     {
         gameObject.SetActive(false);
         GameManagerScript gmScript = FindObjectOfType<GameManagerScript>();
-        gmScript.fadeIn_Conversation();
+        gmScript.fadeInBackground();
         gmScript.ConversationUIOpen = false;
     }
 }

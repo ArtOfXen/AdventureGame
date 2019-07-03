@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public Image fadeOutImage_exclUI;
-    public Image fadeOutImage_inclUI;
+    [SerializeField] private Image fadeOutImage_exclUI;
+    [SerializeField] private Image fadeOutImage_inclUI;
     public GameObject conversationUI;
+    public GameObject notebookUI;
     [HideInInspector] public SceneManager currentScene;
 
     public SceneManager[] allScenes;
 
     private Color fadeOutImageColour;
+
+    public NoteData DEBUG_TEST_NOTE;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,8 @@ public class GameManagerScript : MonoBehaviour
         ConversationUIOpen = false;
 
         fadeOutImageColour = fadeOutImage_exclUI.color;
+
+        notebookUI.GetComponent<NotebookScript>().addNote(DEBUG_TEST_NOTE);
     }
 
     // Update is called once per frame
@@ -35,24 +40,28 @@ public class GameManagerScript : MonoBehaviour
 
     public bool ConversationUIOpen { get; set; }
 
-    public void fadeOut_Conversation()
+    public void fadeOutBackground()
     {
+        fadeOutImage_exclUI.enabled = true;
         fadeOutImage_exclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0.5f);
     }
 
-    public void fadeIn_Conversation()
+    public void fadeInBackground()
     {
         fadeOutImage_exclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0);
+        fadeOutImage_exclUI.enabled = false;
     }
 
     public void fadeOut_ChangeLocation()
     {
+        fadeOutImage_inclUI.enabled = true;
         fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 1f);
     }
 
     public void fadeIn_ChangeLocation()
     {
         fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0);
+        fadeOutImage_inclUI.enabled = false;
     }
 
 

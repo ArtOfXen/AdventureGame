@@ -19,6 +19,7 @@ public class PlayerInputScript : MonoBehaviour
     private ItemInteractionScript selectedInventoryItem;
 
     bool aSelectionMenuIsOpen;
+    [HideInInspector] public bool notebookIsOpen;
 
     bool combiningInProgress;
     [HideInInspector] public ItemInteractionScript combiningItem;
@@ -46,6 +47,7 @@ public class PlayerInputScript : MonoBehaviour
         mouseOverUI = false;
         showExamineObjectText = false;
         combiningInProgress = false;
+        notebookIsOpen = false;
     }
 
     // Update is called once per frame
@@ -57,7 +59,6 @@ public class PlayerInputScript : MonoBehaviour
         
         if (showExamineObjectText)
         {
-
             if (Time.time - examineStartTime >= examineDurationTime)
             {
                 showExamineObjectText = false;
@@ -108,8 +109,11 @@ public class PlayerInputScript : MonoBehaviour
                 }
             }
 
-            // if menu is open and player clicks outside of menu area, close menu
-            else if (aSelectionMenuIsOpen) closeCurrentSelectionMenu();
+            // if menu is open and player clicks outside of menu area, close menu.
+            else if (aSelectionMenuIsOpen && !notebookIsOpen)
+            {
+                closeCurrentSelectionMenu();
+            }
 
             else if (!mouseOverUI)
                 destinationPosition = getMousePositionInWorld(); // TODO: cast mouse ray and only set destination position if ray hits ground
@@ -156,10 +160,14 @@ public class PlayerInputScript : MonoBehaviour
     {
         if (combiningInProgress && inventoryItem != combiningItem)
         {
-            if (!FindObjectOfType<GameManagerScript>().combineActors(combiningItem, inventoryItem))
-            {
+            // check if the item player is attempting to combine with is the notebook
+            if (inventoryItem.itemSlotIndex == 0)
                 enableExamineObjectText("I can't combine those...");
-            }
+
+            // try to combine items
+            else if (!FindObjectOfType<GameManagerScript>().combineActors(combiningItem, inventoryItem))
+                enableExamineObjectText("I can't combine those...");
+            
             else
             {
                 combiningInProgress = false;
@@ -172,7 +180,12 @@ public class PlayerInputScript : MonoBehaviour
             closeCurrentSelectionMenu();
             selectedInventoryItem = inventoryItem;
             selectedInventoryItem.openItemMenu();
-            aSelectionMenuIsOpen = true;
+
+            // the notebook has no selection menu, so it does not need to be set as 'open' if the notebook was the item clicked on.
+            //if (inventoryItem.itemSlotIndex != 0)
+            //{
+                aSelectionMenuIsOpen = true;
+            //}
         }
     }
 
@@ -208,6 +221,13 @@ public class PlayerInputScript : MonoBehaviour
             aSelectionMenuIsOpen = false;
         }
     }
+
+    public void closeNotebook()
+    {
+        FindObjectOfType<GameManagerScript>().fadeInBackground();
+        closeCurrentSelectionMenu(); // this function closes the notebook
+    }
+        
 
     public void checkIfMouseHighlightingObject()
     {
@@ -265,6 +285,9 @@ public class PlayerInputScript : MonoBehaviour
     {
         // don't highlight if object is already selected
         if (worldObject == selectedWorldObject) return;
+
+        // if the mouse is over a UI element, they shouldn't be able to highlight objects beneath UI
+        if (mouseOverUI) return; 
 
         // clear current highlighted object
         if (highlightedWorldObject != null) stopHighlightingWorldObject(highlightedWorldObject);
@@ -333,6 +356,7 @@ public class PlayerInputScript : MonoBehaviour
 
     public void enableExamineObjectText(string examineText)
     {
+        Debug.Log(examineText);
         UI_playerThoughtsText.GetComponent<Text>().enabled = true;
         UI_playerThoughtsText.GetComponent<Text>().text = examineText;
         showExamineObjectText = true;

@@ -49,12 +49,16 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
             dataOfItemInSlot = inventory.items[itemSlotIndex];
             itemNameUI.enabled = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().setHighlightedInventoryItem(this);
-            if (itemSlotIndex == 0)
-                itemNameUI.text = "Open Notebook";
-            else if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+            if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
                 itemNameUI.text = "Show " + dataOfItemInSlot.actorName;
             else
                 itemNameUI.text = dataOfItemInSlot.actorName;
+        }
+        else if (itemSlotIndex == 0)
+        {
+            itemNameUI.text = "Open Notebook";
+            itemNameUI.enabled = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().setHighlightedInventoryItem(this);
         }
         mouseOver = true;
     }
@@ -71,7 +75,10 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         if (itemSlotIndex == 0)
         {
-            // TODO: OPEN NOTEBOOK
+            // if this item is the notebook
+            FindObjectOfType<GameManagerScript>().notebookUI.SetActive(true);
+            FindObjectOfType<PlayerInputScript>().notebookIsOpen = true;
+            FindObjectOfType<GameManagerScript>().fadeOutBackground();
         }
         else
         { 
@@ -153,7 +160,10 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         if (itemSlotIndex == 0)
         {
-            // TODO: CLOSE NOTEBOOK UI
+            // if this item is the notebook
+            FindObjectOfType<GameManagerScript>().notebookUI.SetActive(false);
+            FindObjectOfType<PlayerInputScript>().notebookIsOpen = false;
+            FindObjectOfType<GameManagerScript>().fadeInBackground();
         }
         else
         {

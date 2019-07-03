@@ -26,7 +26,6 @@ public class CharacterScript : InteractableObjectScript
         switch (interaction)
         {
             case InteractionType.TalkTo:
-                Debug.Log("Object Talked t... wait, object??");
                 FindObjectOfType<GameManagerScript>().conversationUI.GetComponent<ConversationScript>().openConversation(null, loadedConversation);
                 break;
         }
