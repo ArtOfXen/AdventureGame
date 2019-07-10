@@ -8,10 +8,11 @@ public class ConversationScript : MonoBehaviour
     //private enum CauseOfDialogueChange
     //{ next, previous }
 
-    public ConversationData currentConversation;
+    [HideInInspector] public ConversationData currentConversation;
     ConversationData.DialogueExcerpt currentDialogueExcerpt;
     int currentDialogueLineIndex;
 
+    [SerializeField] private GameObject inventoryGameObject;
     //public Button previousButton;
     public Button nextButton;
     public Image leftConversationalistSprite;
@@ -27,6 +28,7 @@ public class ConversationScript : MonoBehaviour
     private bool itemWasJustShown;
     private ConversationData.ItemReaction itemBeingShown;
 
+
     private void Start()
     {
         areDecisionButtonsActive = false;
@@ -35,6 +37,8 @@ public class ConversationScript : MonoBehaviour
         itemWasJustShown = false;
         dialogueLineIDsForDecisionButtons = new int[4];
     }
+
+    
 
     public void openConversation(ActorData itemCombinedWithCharacter, ConversationData newConversation)
     {
@@ -56,7 +60,8 @@ public class ConversationScript : MonoBehaviour
         gmScript.fadeOutBackground();
         gmScript.ConversationUIOpen = true;
 
-        // TODO: HIDE INVENTORY
+        // hide inventory when conversation starts
+        inventoryGameObject.GetComponent<InventoryScript>().hideInventory();
 
         if (indexOfItemCombined < 0)
             changeDialogueExcerpt(0);
@@ -153,7 +158,7 @@ public class ConversationScript : MonoBehaviour
                 {
                     nextButton.gameObject.SetActive(true);
                     nextButton.GetComponentInChildren<Text>().text = "Exit";
-                    // TODO: SHOW INVENTORY
+                    inventoryGameObject.GetComponent<InventoryScript>().unhideInventory();
                 }
                 else
                     nextButton.gameObject.SetActive(false);
@@ -185,40 +190,12 @@ public class ConversationScript : MonoBehaviour
                     exitConversation();
                 }
                 else
+                {
                     changeDialogueExcerpt(currentDialogueExcerpt.nextDialogueID);
+                }
             }
         }
     }
-
-    //public void previousButtonPressed()
-    //{
-    //    if (onIrrelevantItemLine)
-    //    {
-    //        onIrrelevantItemLine = false;
-    //        changeDialogueExcerpt(currentDialogueLineIndex, CauseOfDialogueChange.next);
-    //    }
-    //    else
-    //    {
-    //        if (areDecisionButtonsActive)
-    //        {
-    //            disableDecisionButtons();
-    //        }
-
-    //        if (currentDialogueLineIndex > 0)
-    //        {
-    //            changeDialogueLine(currentDialogueLineIndex - 1, CauseOfDialogueChange.previous);
-    //        }
-    //        else
-    //        {
-    //            if (currentDialogueExcerpt.previousDialogueID < 0)
-    //            {
-    //                exitConversation();
-    //            }
-    //            else
-    //                changeDialogueExcerpt(currentDialogueExcerpt.previousDialogueID, CauseOfDialogueChange.previous);
-    //        }
-    //    }
-    //}
 
     public void decisionButtonPressed(int indexOfButton)
     {
@@ -229,7 +206,7 @@ public class ConversationScript : MonoBehaviour
     public void showInventoryItem(ActorData itemShown)
     {
         disableDecisionButtons();
-        // TODO: HIDE INVENTORY
+        inventoryGameObject.GetComponent<InventoryScript>().hideInventory();
 
         // returns -1 if not found
         int indexOfItemShown = findIndexOfReactionItem(itemShown);
@@ -240,6 +217,7 @@ public class ConversationScript : MonoBehaviour
             itemWasJustShown = true;
             if (itemBeingShown.interactionType == ConversationData.ItemInteractionType.give)
                 FindObjectOfType<InventoryScript>().removeItem(itemShown);
+            Debug.Log("Change Dialogue Excerpt due to relevant item being shown");
             changeDialogueExcerpt(itemBeingShown.idOfDialogueExcerpt);
         }
         else
@@ -251,7 +229,6 @@ public class ConversationScript : MonoBehaviour
             rightConversationalistSprite.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
 
             nextButton.gameObject.SetActive(true);
-            nextButton.GetComponentInChildren<Text>().text = "Next";
 
             if (currentDialogueExcerpt.rightCharacter.gender == 'f')
                 conversationText.text = "I don't want to talk to her about that.";

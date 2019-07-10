@@ -8016,6 +8016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentConversation: {fileID: 0}
+  inventoryGameObject: {fileID: 142680871}
   nextButton: {fileID: 267555428}
   leftConversationalistSprite: {fileID: 1423617014}
   rightConversationalistSprite: {fileID: 1952216295}

@@ -42,4 +42,14 @@ public class InventoryScript : MonoBehaviour
         }
         Debug.Log("Item to remove not found. InventoryScript ln43.");
     }
+
+    public void hideInventory()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void unhideInventory()
+    {
+        gameObject.SetActive(true);
+    }
 }
