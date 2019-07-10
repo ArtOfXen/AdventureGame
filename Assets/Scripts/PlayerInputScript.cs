@@ -224,7 +224,11 @@ public class PlayerInputScript : MonoBehaviour
 
     public void closeNotebook()
     {
-        FindObjectOfType<GameManagerScript>().fadeInBackground();
+        // don't fade-in to game if conversation is ongoing
+        if (!FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+        {
+            FindObjectOfType<GameManagerScript>().fadeInBackground();
+        }
         closeCurrentSelectionMenu(); // this function closes the notebook
     }
         

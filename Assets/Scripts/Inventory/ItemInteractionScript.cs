@@ -163,7 +163,6 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
             // if this item is the notebook
             FindObjectOfType<GameManagerScript>().notebookUI.SetActive(false);
             FindObjectOfType<PlayerInputScript>().notebookIsOpen = false;
-            FindObjectOfType<GameManagerScript>().fadeInBackground();
         }
         else
         {
