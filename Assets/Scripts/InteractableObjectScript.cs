@@ -86,7 +86,7 @@ public class InteractableObjectScript : MonoBehaviour
                 break;
 
             case InteractionType.Separate:
-                FindObjectOfType<GameManagerScript>().separateActor(this);
+                GameManagerScript.gameManager.separateActor(this);
                 break;
         }
     }

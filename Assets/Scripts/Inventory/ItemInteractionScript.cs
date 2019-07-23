@@ -49,7 +49,7 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
             dataOfItemInSlot = inventory.items[itemSlotIndex];
             itemNameUI.enabled = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().setHighlightedInventoryItem(this);
-            if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+            if (GameManagerScript.gameManager.ConversationUIOpen)
                 itemNameUI.text = "Show " + dataOfItemInSlot.actorName;
             else
                 itemNameUI.text = dataOfItemInSlot.actorName;
@@ -65,6 +65,11 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        endItemHoverOver();
+    }
+
+    public void endItemHoverOver()
+    {
         if (!menuOpen)
             itemNameUI.enabled = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().stopHighlightingInventoryItem(this);
@@ -76,9 +81,9 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
         if (itemSlotIndex == 0)
         {
             // if this item is the notebook
-            FindObjectOfType<GameManagerScript>().notebookUI.SetActive(true);
+            GameManagerScript.gameManager.notebookUI.SetActive(true);
             FindObjectOfType<PlayerInputScript>().notebookIsOpen = true;
-            FindObjectOfType<GameManagerScript>().fadeOutBackground();
+            GameManagerScript.gameManager.fadeOutBackground();
         }
         else
         { 
@@ -135,7 +140,7 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
                 break;
 
             case InteractableObjectScript.InteractionType.Separate:
-                FindObjectOfType<GameManagerScript>().GetComponent<GameManagerScript>().separateActor(this);
+                GameManagerScript.gameManager.separateActor(this);
                 break;
 
             default:
@@ -161,7 +166,7 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
         if (itemSlotIndex == 0)
         {
             // if this item is the notebook
-            FindObjectOfType<GameManagerScript>().notebookUI.SetActive(false);
+            GameManagerScript.gameManager.notebookUI.SetActive(false);
             FindObjectOfType<PlayerInputScript>().notebookIsOpen = false;
         }
         else

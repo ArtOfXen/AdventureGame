@@ -92,9 +92,9 @@ public class PlayerInputScript : MonoBehaviour
             else if (highlightedInventoryItem != null)
             {
                 // don't show item in conversation if item is the notebook, we need to open/close the notebook instead
-                if (FindObjectOfType<GameManagerScript>().ConversationUIOpen && highlightedInventoryItem.itemSlotIndex != 0)
+                if (GameManagerScript.gameManager.ConversationUIOpen && highlightedInventoryItem.itemSlotIndex != 0)
                 {
-                    FindObjectOfType<GameManagerScript>().conversationUI.GetComponent<ConversationScript>().showInventoryItem(highlightedInventoryItem.dataOfItemInSlot);
+                    GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().showInventoryItem(highlightedInventoryItem.dataOfItemInSlot);
                 }
                 else
                 {
@@ -115,8 +115,12 @@ public class PlayerInputScript : MonoBehaviour
                 closeCurrentSelectionMenu();
             }
 
+            // set movement destination to mouse click location
             else if (!mouseOverUI)
+            {
                 destinationPosition = getMousePositionInWorld(); // TODO: cast mouse ray and only set destination position if ray hits ground
+                setQueuedAction(null, InteractableObjectScript.InteractionType.Examine);
+            }
         }
 
         // update highlighted object UI
@@ -165,7 +169,7 @@ public class PlayerInputScript : MonoBehaviour
                 enableExamineObjectText("I can't combine those...");
 
             // try to combine items
-            else if (!FindObjectOfType<GameManagerScript>().combineActors(combiningItem, inventoryItem))
+            else if (!GameManagerScript.gameManager.combineActors(combiningItem, inventoryItem))
                 enableExamineObjectText("I can't combine those...");
             
             else
@@ -225,9 +229,9 @@ public class PlayerInputScript : MonoBehaviour
     public void closeNotebook()
     {
         // don't fade-in to game if conversation is ongoing
-        if (!FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+        if (!GameManagerScript.gameManager.ConversationUIOpen)
         {
-            FindObjectOfType<GameManagerScript>().fadeInBackground();
+            GameManagerScript.gameManager.fadeInBackground();
         }
         closeCurrentSelectionMenu(); // this function closes the notebook
     }
@@ -326,6 +330,12 @@ public class PlayerInputScript : MonoBehaviour
         {
             highlightedInventoryItem = item;
         }
+    }
+
+    public void setHighlightedInventoryItemToNull()
+    {
+        if (highlightedInventoryItem != null)
+            highlightedInventoryItem.endItemHoverOver();
     }
 
     public void setQueuedAction(GameObject newObjectToActUpon, InteractableObjectScript.InteractionType newInteraction)

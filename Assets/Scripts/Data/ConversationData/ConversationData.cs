@@ -22,9 +22,9 @@ public class ConversationData : ScriptableObject
         public ActorData item;
         public ItemInteractionType interactionType;
         public int idOfDialogueExcerpt; // excerpt to go to if this item is used
-        public bool unlocked;// can lock item until certain events happen
-        public bool changeDialogueAfterShown; // after character is shown this item, the text for the item will change
-        public int idOfNewDialogueAfterShown; // new dialogue after being shown.
+        public int idOfDialogueAfterShown; // new dialogue after being shown.
+        public bool unlocked; // can lock item until certain events happen
+        //public bool changeDialogueAfterShown; // after character is shown this item, the text for the item will change
     }
 
     [System.Serializable]
@@ -46,7 +46,8 @@ public class ConversationData : ScriptableObject
         public bool decisionCanBeMade;
         public Decision[] decisions;
         public bool endOfConversation; // is this the last dialogue excerpt in the conversation
-        // Effect effect // what happens after this excerpt ends? i.e. does the player unlock a new clue or item
+        public ActorData itemToGiveToPlayer; // item given to player as a result of 'effect'
+        public NoteData noteToGiveToPlayer; // note given to player as a result of 'effect'
     }
 
     public int conversationID;

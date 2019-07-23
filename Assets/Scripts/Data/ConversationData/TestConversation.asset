@@ -17,75 +17,97 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 032cc44a7ff0098418c05a83f7d0f06d, type: 2}
     interactionType: 0
     idOfDialogueExcerpt: 4
+    idOfDialogueAfterShown: 5
     unlocked: 1
-    changeDialogueAfterShown: 1
-    idOfNewDialogueAfterShown: 5
   - item: {fileID: 11400000, guid: e0598ca57649e974cbaf6fc020ff922d, type: 2}
     interactionType: 0
-    idOfDialogueExcerpt: 6
+    idOfDialogueExcerpt: 3
+    idOfDialogueAfterShown: 6
     unlocked: 1
-    changeDialogueAfterShown: 0
-    idOfNewDialogueAfterShown: -1
   dialogue:
   - dialogueID: 0
     nextDialogueID: -1
     previousDialogueID: -1
     dialogueLines:
-    - text: Hello!
+    - text: Hello, dear!
       leftCharacterIsSpeaking: 0
-    - text: Pick a number!
+    - text: I am an old lady.
       leftCharacterIsSpeaking: 0
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 1
     decisions:
-    - idOfNextDialogueExcerpt: 1
-      text: Four!
-      unlocked: 1
     - idOfNextDialogueExcerpt: 2
-      text: Eight!
+      text: Are you really? You don't look a day over 3 weeks old!
       unlocked: 1
-    - idOfNextDialogueExcerpt: 3
-      text: Fifteen!
+    - idOfNextDialogueExcerpt: 1
+      text: Yes, I can tell. You look very wrinkled and racist.
       unlocked: 1
     endOfConversation: 0
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
   - dialogueID: 1
     nextDialogueID: -1
     previousDialogueID: 0
     dialogueLines:
-    - text: That's a shit number...
+    - text: Yes, I can tell. You look very wrinkled and racist.
+      leftCharacterIsSpeaking: 1
+    - text: Well. Fuck you I guess...
+      leftCharacterIsSpeaking: 0
+    - text: '... Did you want something?'
       leftCharacterIsSpeaking: 0
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 0
     decisions: []
     endOfConversation: 1
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
   - dialogueID: 2
     nextDialogueID: -1
     previousDialogueID: 0
     dialogueLines:
-    - text: That's a slightly less shit number...
+    - text: Are you really? You don't look a day over 3 weeks old!
+      leftCharacterIsSpeaking: 1
+    - text: That is stupid.
+      leftCharacterIsSpeaking: 0
+    - text: You must be stupid too.
+      leftCharacterIsSpeaking: 0
+    - text: Can I help you with anything, you stupid head?
       leftCharacterIsSpeaking: 0
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 0
     decisions: []
     endOfConversation: 1
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
   - dialogueID: 3
     nextDialogueID: -1
     previousDialogueID: 0
     dialogueLines:
-    - text: Why?
-      leftCharacterIsSpeaking: 0
-    - text: Why not?
+    - text: I have heard rumours that you are... How should I phrase this... sexually
+        indiscriminate.
       leftCharacterIsSpeaking: 1
-    - text: Meh...
+    - text: Yes, what about it?
       leftCharacterIsSpeaking: 0
+    - text: '...'
+      leftCharacterIsSpeaking: 1
+    - text: DID YOU KILL YOUR HUSBAND??
+      leftCharacterIsSpeaking: 1
+    - text: No.
+      leftCharacterIsSpeaking: 0
+    - text: Oh... I'll move on then...
+      leftCharacterIsSpeaking: 1
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 0
     decisions: []
     endOfConversation: 1
+    itemToGiveToPlayer: {fileID: 11400000, guid: de4755128de65584986698dce18df1d8,
+      type: 2}
+    noteToGiveToPlayer: {fileID: 11400000, guid: f40700f55583b244d8d18109c15bfc53,
+      type: 2}
   - dialogueID: 4
     nextDialogueID: -1
     previousDialogueID: -1
@@ -101,29 +123,32 @@ MonoBehaviour:
     decisionCanBeMade: 0
     decisions: []
     endOfConversation: 1
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
   - dialogueID: 5
     nextDialogueID: -1
     previousDialogueID: -1
     dialogueLines:
-    - text: I already showed her that. She didn't seem very impressed...
+    - text: I already showed her that. She wasn't very impressed.
       leftCharacterIsSpeaking: 1
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 0
     decisions: []
-    endOfConversation: 0
+    endOfConversation: 1
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
   - dialogueID: 6
     nextDialogueID: -1
     previousDialogueID: -1
     dialogueLines:
-    - text: I found these highly illegal drugs. How do you explain this?
+    - text: I already asked her about that and it was very embaressing. I'll ask her
+        about something else.
       leftCharacterIsSpeaking: 1
-    - text: I...
-      leftCharacterIsSpeaking: 0
-    - text: Please leave.
-      leftCharacterIsSpeaking: 0
     leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
     rightCharacter: {fileID: 11400000, guid: 1392f7024cbebf843b9bd8d02dfe6f2c, type: 2}
     decisionCanBeMade: 0
     decisions: []
-    endOfConversation: 0
+    endOfConversation: 1
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
