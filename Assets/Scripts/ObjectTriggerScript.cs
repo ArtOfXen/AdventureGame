@@ -30,13 +30,13 @@ public class ObjectTriggerScript : MonoBehaviour
                 if (playerScript.getQueuedActionObject().Equals(transform.parent.gameObject))
                 {
                     playerScript.stopMovement();
-                    // TODO make player look at parent object
+                    // TODO: make player look at parent object
                     InteractableObjectScript.InteractionType interaction = playerScript.getQueuedActionType();
                     playerScript.setQueuedAction(null, InteractableObjectScript.InteractionType.Examine); // reset queued action to stop this function running indefinitely
 
                     if (interaction == InteractableObjectScript.InteractionType.Combine)
                     {
-                        if (!FindObjectOfType<GameManagerScript>().combineActors(playerScript.combiningItem, transform.parent.GetComponent<InteractableObjectScript>()))
+                        if (!GameManagerScript.gameManager.combineActors(playerScript.combiningItem, transform.parent.GetComponent<InteractableObjectScript>()))
                         {
                             player.GetComponent<PlayerInputScript>().enableExamineObjectText("I can't combine those...");
                         }

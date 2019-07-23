@@ -45,6 +45,7 @@ public class InventoryScript : MonoBehaviour
 
     public void hideInventory()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().setHighlightedInventoryItemToNull();
         gameObject.SetActive(false);
     }
 

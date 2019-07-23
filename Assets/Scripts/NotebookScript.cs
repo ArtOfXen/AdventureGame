@@ -59,7 +59,7 @@ public class NotebookScript : MonoBehaviour
         closeNotebook();
 
         // conversation in progress
-        if (FindObjectOfType<GameManagerScript>().ConversationUIOpen)
+        if (GameManagerScript.gameManager.ConversationUIOpen)
         {
             FindObjectOfType<ConversationScript>().showInventoryItem(notes[buttonIndex]);
         }

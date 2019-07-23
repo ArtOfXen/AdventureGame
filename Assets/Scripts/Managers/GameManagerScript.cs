@@ -2,9 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public struct PreviousConversationData
+    {
+        public string characterName;
+        public int numberOfItemsAlreadyShown;
+        public ActorData[] itemsAlreadyShown;
+    }
+    [HideInInspector] List<PreviousConversationData> previousConversationData;
+
+    public static GameManagerScript gameManager;
+
     [SerializeField] private Image fadeOutImage_exclUI;
     [SerializeField] private Image fadeOutImage_inclUI;
     public GameObject conversationUI;
@@ -17,18 +30,31 @@ public class GameManagerScript : MonoBehaviour
 
     public NoteData DEBUG_TEST_NOTE;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        DontDestroyOnLoad(this);
-
-        // FOR TESTING PURPOSES
-        currentScene = allScenes[0];
-
+        if (gameManager == null)
+        {
+            DontDestroyOnLoad(this);
+            gameManager = this;
+        }
+        else if (gameManager != this)
+        {
+            Destroy(gameObject);
+        }
+        
         ConversationUIOpen = false;
 
         fadeOutImageColour = fadeOutImage_exclUI.color;
 
+        previousConversationData = new List<PreviousConversationData>();
+
+        // TODO: LOAD DATA FROM FILE
+    }
+
+    private void Start()
+    {
+        // FOR TESTING PURPOSES
+        currentScene = allScenes[0];
         notebookUI.GetComponent<NotebookScript>().addNote(DEBUG_TEST_NOTE);
     }
 
@@ -273,4 +299,69 @@ public class GameManagerScript : MonoBehaviour
 
         return true;
     }
+
+    public PreviousConversationData getPreviousConversationData(CharacterData characterData)
+    {
+        foreach (PreviousConversationData conversationData in previousConversationData)
+        {
+            if (conversationData.characterName == characterData.characterName)
+            {
+                return conversationData;
+            }
+        }
+
+        PreviousConversationData emptyData = new PreviousConversationData();
+        emptyData.characterName = characterData.characterName;
+        emptyData.numberOfItemsAlreadyShown = 0;
+        emptyData.itemsAlreadyShown = new ActorData[16];
+
+        return emptyData;
+    }
+
+    public void saveGame()
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/savefile1.dat");
+
+        SaveFileData saveData = new SaveFileData();
+        // TODO: CREATE SAVE DATA CLASS
+        // saveData.currentSceneNumber = currentScene.sceneID
+        // etc.
+
+        binaryFormatter.Serialize(file, saveData);
+        file.Close();
+    }
+
+    public void loadGame()
+    {
+        if (File.Exists(Application.persistentDataPath + "/savefile1.dat"))
+        {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/savefile1.dat", FileMode.Open);
+
+            SaveFileData loadedData = (SaveFileData)binaryFormatter.Deserialize(file);
+            file.Close();
+
+            // TODO: CONVERT LOADED FILE DATA INTO GAME DATA
+            // currentScene.sceneID = loadedData.currentSceneNumber;
+            // etc.
+        }
+        else
+        {
+            // TODO: SET VALUES FOR EACH VARIABLE AS THEY WILL BE AT THE START OF THE GAME
+            // chapterNumber = 0;
+            // sceneNumber = 0;
+            // etc.
+        }
+    }
+
+}
+
+[Serializable]
+class SaveFileData
+{
+    public int currentChapterNumber;
+    public int currentSceneNumber;
+    public NoteData[] currentNotes;
+    public ActorData[] inventory;
 }

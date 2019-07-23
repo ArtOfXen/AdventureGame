@@ -9,11 +9,15 @@ public class CharacterScript : InteractableObjectScript
     ConversationData loadedConversation;
     public CharacterData characterData;
 
+    [HideInInspector] public GameManagerScript.PreviousConversationData previousConversationData;
+
     // Start is called before the first frame update
     void Start()
     {
         base.Setup();
         loadedConversation = allConversations[indexOfInitialConversation];
+        
+        previousConversationData = GameManagerScript.gameManager.getPreviousConversationData(characterData);
     }
 
     // Update is called once per frame
@@ -26,7 +30,10 @@ public class CharacterScript : InteractableObjectScript
         switch (interaction)
         {
             case InteractionType.TalkTo:
-                FindObjectOfType<GameManagerScript>().conversationUI.GetComponent<ConversationScript>().openConversation(null, loadedConversation);
+                GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().openConversation(null, loadedConversation, this);
+                break;
+            default:
+                base.doAction(interaction);
                 break;
         }
     }
