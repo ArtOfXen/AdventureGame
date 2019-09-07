@@ -24,30 +24,35 @@ public class ConversationScript : MonoBehaviour
     public Text rightConversationalistName;
     public Text conversationText;
 
+    private Image mainCharacterSprite;
+    private string mainCharacterName;
+
     bool areDecisionButtonsActive;
     public Button[] decisionButtons;
     int[] dialogueLineIDsForDecisionButtons;
 
     private ConversationData.ItemReaction itemBeingShown;
-
+    private bool inventoryAvailableDuringConversation;
 
     private void Start()
     {
         areDecisionButtonsActive = false;
         dialogueLineIDsForDecisionButtons = new int[4];
+        mainCharacterSprite = leftConversationalistSprite;
+        mainCharacterName = leftConversationalistName.text;
     }
 
-    
-
-    public void openConversation(ActorData itemCombinedWithCharacter, ConversationData newConversation, CharacterScript characterScript)
+    public void openConversationWithCharacter(ActorData itemCombinedWithCharacter, ConversationData newConversation, CharacterScript characterScriptForNPC)
     {
         int indexOfItemCombined = findIndexOfReactionItem(itemCombinedWithCharacter);
 
+        inventoryAvailableDuringConversation = true;
+
         currentConversation = newConversation;
 
-        npcCharacterScript = characterScript;
+        npcCharacterScript = characterScriptForNPC;
 
-        rightConversationalistName.text = characterScript.characterData.characterName;
+        rightConversationalistName.text = characterScriptForNPC.characterData.characterName;
 
         gameObject.SetActive(true);
         nextButton.gameObject.SetActive(true);
@@ -65,6 +70,73 @@ public class ConversationScript : MonoBehaviour
             changeDialogueExcerpt(0);
         else
             changeDialogueExcerpt(currentConversation.itemReactions[indexOfItemCombined].idOfDialogueExcerpt);
+    }
+    
+    public void examineActor(ActorData examinedActor, bool actorIsWorldObject)
+    {
+        currentConversation = examinedActor.examineData;
+        int dialogueID;
+        if (actorIsWorldObject)
+            dialogueID = 0;
+        else
+            dialogueID = 1;
+
+        if (currentConversation.dialogue[dialogueID].rightCharacter != null)
+        {
+            rightConversationalistName.gameObject.SetActive(true);
+            rightConversationalistName.text = currentConversation.dialogue[dialogueID].rightCharacter.characterName;
+        }
+        else
+        {
+            rightConversationalistName.gameObject.SetActive(false);
+        }
+
+        inventoryAvailableDuringConversation = false;
+
+        gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(true);
+        nextButton.GetComponentInChildren<Text>().text = "Next";
+
+        areDecisionButtonsActive = false;
+
+        GameManagerScript.gameManager.fadeOutBackground();
+        GameManagerScript.gameManager.ConversationUIOpen = true;
+
+        // hide inventory when conversation starts
+        inventoryGameObject.GetComponent<InventoryScript>().hideInventory();
+
+        changeDialogueExcerpt(dialogueID);
+    }
+    
+    public void showConversation(ConversationData newConversation)
+    {
+        currentConversation = newConversation;
+
+        if (currentConversation.dialogue[0].rightCharacter != null)
+        {
+            rightConversationalistName.gameObject.SetActive(true);
+            rightConversationalistName.text = currentConversation.dialogue[0].rightCharacter.characterName;
+        }
+        else
+        {
+            rightConversationalistName.gameObject.SetActive(false);
+        }
+
+        inventoryAvailableDuringConversation = false;
+
+        gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(true);
+        nextButton.GetComponentInChildren<Text>().text = "Next";
+
+        areDecisionButtonsActive = false;
+
+        GameManagerScript.gameManager.fadeOutBackground();
+        GameManagerScript.gameManager.ConversationUIOpen = true;
+
+        // hide inventory when conversation starts
+        inventoryGameObject.GetComponent<InventoryScript>().hideInventory();
+
+        changeDialogueExcerpt(0);
     }
 
     void changeDialogueExcerpt(int indexOfDialogueExcerpt)
@@ -86,7 +158,17 @@ public class ConversationScript : MonoBehaviour
         }
 
         leftConversationalistSprite.sprite = currentDialogueExcerpt.leftCharacter.sprite;
-        rightConversationalistSprite.sprite = currentDialogueExcerpt.rightCharacter.sprite;
+        if (currentDialogueExcerpt.rightCharacter == null)
+        {
+            rightConversationalistSprite.gameObject.SetActive(false);
+            rightConversationalistName.gameObject.SetActive(false);
+        }
+        else
+        {
+            rightConversationalistSprite.gameObject.SetActive(true);
+            rightConversationalistName.gameObject.SetActive(true);
+            rightConversationalistSprite.sprite = currentDialogueExcerpt.rightCharacter.sprite;
+        }
 
         changeDialogueLine(0); // show first line of new excerpt
 
@@ -162,7 +244,8 @@ public class ConversationScript : MonoBehaviour
             { // if no dialogue after this one, change next button to exit button
                 nextButton.gameObject.SetActive(true);
                 nextButton.GetComponentInChildren<Text>().text = "Exit";
-                inventoryGameObject.GetComponent<InventoryScript>().unhideInventory();
+                if (inventoryAvailableDuringConversation)
+                    inventoryGameObject.GetComponent<InventoryScript>().unhideInventory();
             }
         }
 
@@ -247,7 +330,8 @@ public class ConversationScript : MonoBehaviour
             rightConversationalistSprite.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
 
             nextButton.gameObject.SetActive(true);
-            inventoryGameObject.GetComponent<InventoryScript>().unhideInventory();
+            if (inventoryAvailableDuringConversation)
+                inventoryGameObject.GetComponent<InventoryScript>().unhideInventory();
 
             if (currentDialogueExcerpt.rightCharacter.gender == 'f')
                 conversationText.text = "I don't want to talk to her about that.";
@@ -286,6 +370,7 @@ public class ConversationScript : MonoBehaviour
         gameObject.SetActive(false);
         GameManagerScript.gameManager.fadeInBackground();
         GameManagerScript.gameManager.ConversationUIOpen = false;
+        inventoryGameObject.GetComponent<InventoryScript>().unhideInventory();
         npcCharacterScript = null;
     }
 }

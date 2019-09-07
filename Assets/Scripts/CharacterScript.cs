@@ -30,7 +30,7 @@ public class CharacterScript : InteractableObjectScript
         switch (interaction)
         {
             case InteractionType.TalkTo:
-                GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().openConversation(null, loadedConversation, this);
+                GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().openConversationWithCharacter(null, loadedConversation, this);
                 break;
             default:
                 base.doAction(interaction);

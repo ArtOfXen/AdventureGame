@@ -31,6 +31,7 @@ public class ActorData : ScriptableObject // data for objects picked up by playe
 
     public string actorName;
     public string examineText;
+    public ConversationData examineData;
     public InteractableObjectScript.InteractionType[] interactionsOtherThanExamine_worldObject;
     public Vector3 worldPosition;
 

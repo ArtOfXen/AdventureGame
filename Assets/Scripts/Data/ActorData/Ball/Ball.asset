@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorName: Ball
   examineText: It's that ball I found.
+  examineData: {fileID: 11400000, guid: 2a0e878ee54436d44b10e17e8fc3dee2, type: 2}
   interactionsOtherThanExamine_worldObject: 02000000
   worldPosition: {x: 0, y: 0, z: 0}
   inventoryImage: {fileID: 21300000, guid: 8a355be8a28a9b54a9f126e349f25948, type: 3}

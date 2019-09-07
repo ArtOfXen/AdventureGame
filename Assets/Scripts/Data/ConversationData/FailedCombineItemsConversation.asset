@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166830226f6c6fe4898c4613eb30dec7, type: 3}
+  m_Name: FailedCombineItemsConversation
+  m_EditorClassIdentifier: 
+  conversationID: 0
+  itemReactions: []
+  dialogue:
+  - dialogueID: 0
+    nextDialogueID: -1
+    previousDialogueID: -1
+    dialogueLines:
+    - text: I can't combine those...
+      leftCharacterIsSpeaking: 1
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 0}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 0
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}
+  - dialogueID: 1
+    nextDialogueID: -1
+    previousDialogueID: -1
+    dialogueLines:
+    - text: I can't combine those...
+      leftCharacterIsSpeaking: 1
+    leftCharacter: {fileID: 11400000, guid: f7b388366fc5d114f997821ae031ba54, type: 2}
+    rightCharacter: {fileID: 0}
+    decisionCanBeMade: 0
+    decisions: []
+    endOfConversation: 0
+    itemToGiveToPlayer: {fileID: 0}
+    noteToGiveToPlayer: {fileID: 0}

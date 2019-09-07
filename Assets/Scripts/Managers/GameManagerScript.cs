@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -22,13 +23,18 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private Image fadeOutImage_inclUI;
     public GameObject conversationUI;
     public GameObject notebookUI;
-    [HideInInspector] public SceneManager currentScene;
+    [HideInInspector] public SceneClass currentScene;
 
-    public SceneManager[] allScenes;
+    public SceneClass[] allScenes;
+    public event Action BeforeSceneUnload;
+    public event Action AfterSceneLoad;
 
     private Color fadeOutImageColour;
+    private float fadeDuration = 1f;
+    private bool isCurrentlyFading;
 
     public NoteData DEBUG_TEST_NOTE;
+    public ConversationData failedItemCombinationConversationData;
 
     void Awake()
     {
@@ -51,11 +57,15 @@ public class GameManagerScript : MonoBehaviour
         // TODO: LOAD DATA FROM FILE
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         // FOR TESTING PURPOSES
         currentScene = allScenes[0];
         notebookUI.GetComponent<NotebookScript>().addNote(DEBUG_TEST_NOTE);
+
+        yield return StartCoroutine(loadSceneAndSetActive("DactylStreet_1"));
+        StartCoroutine(fade(0f));
+
     }
 
     // Update is called once per frame
@@ -66,30 +76,77 @@ public class GameManagerScript : MonoBehaviour
 
     public bool ConversationUIOpen { get; set; }
 
+
+
     public void fadeOutBackground()
     {
+        PlayerInputScript player = FindObjectOfType<PlayerInputScript>();
+        player.setHighlightedInventoryItemToNull();
+        player.setHighlightedWorldObjectToNull();
         fadeOutImage_exclUI.enabled = true;
         fadeOutImage_exclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0.5f);
     }
 
     public void fadeInBackground()
     {
+        PlayerInputScript player = FindObjectOfType<PlayerInputScript>();
+        player.setHighlightedInventoryItemToNull();
+        player.setHighlightedWorldObjectToNull();
         fadeOutImage_exclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0);
         fadeOutImage_exclUI.enabled = false;
     }
 
-    public void fadeOut_ChangeLocation()
+    public void fadeAndLoadScene(string sceneName)
     {
-        fadeOutImage_inclUI.enabled = true;
-        fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 1f);
+        if (!isCurrentlyFading)
+        {
+            StartCoroutine(fadeAndSwitchScene(sceneName));
+        }
     }
 
-    public void fadeIn_ChangeLocation()
+    private IEnumerator fade(float finalAlpha)
     {
-        fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 0);
+        isCurrentlyFading = true;
+        fadeOutImage_inclUI.enabled = true;
+
+        float fadeSpeed = Mathf.Abs(fadeOutImage_inclUI.color.a - finalAlpha) / fadeDuration;
+
+        while (!Mathf.Approximately(fadeOutImage_inclUI.color.a, finalAlpha))
+        {
+            fadeOutImage_inclUI.color = new Color(fadeOutImageColour.r, fadeOutImageColour.g, fadeOutImageColour.b, 
+                Mathf.MoveTowards(fadeOutImage_inclUI.color.a, finalAlpha, fadeSpeed * Time.deltaTime));
+            yield return null;
+        }
+
+        isCurrentlyFading = false;
         fadeOutImage_inclUI.enabled = false;
     }
 
+    private IEnumerator fadeAndSwitchScene(string sceneName)
+    {
+        PlayerInputScript player = FindObjectOfType<PlayerInputScript>();
+        player.setHighlightedInventoryItemToNull();
+        player.setHighlightedWorldObjectToNull();
+
+        yield return StartCoroutine(fade(1f));
+
+        BeforeSceneUnload?.Invoke();
+
+        yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+
+        yield return StartCoroutine(loadSceneAndSetActive(sceneName));
+
+        AfterSceneLoad?.Invoke();
+
+        yield return StartCoroutine(fade(0f));
+    }
+
+    private IEnumerator loadSceneAndSetActive(string sceneName)
+    { 
+        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        Scene newlyLoadedScene = SceneManager.GetSceneAt(SceneManager.sceneCount -1);
+        SceneManager.SetActiveScene(newlyLoadedScene);
+    }
 
     public bool combineActors(ItemInteractionScript inventorySlotOfFirstItem, InteractableObjectScript worldObjectCombinedWith)
     {

@@ -68,7 +68,8 @@ public class InteractableObjectScript : MonoBehaviour
         switch (interaction)
         {
             case InteractionType.Examine:
-                player.GetComponent<PlayerInputScript>().enableExamineObjectText(data.examineText);
+                //player.GetComponent<PlayerInputScript>().enableExamineObjectText(data.examineText);
+                GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().examineActor(data, true);
                 break;
 
             case InteractionType.Use:

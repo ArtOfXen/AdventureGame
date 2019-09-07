@@ -38,7 +38,8 @@ public class ObjectTriggerScript : MonoBehaviour
                     {
                         if (!GameManagerScript.gameManager.combineActors(playerScript.combiningItem, transform.parent.GetComponent<InteractableObjectScript>()))
                         {
-                            player.GetComponent<PlayerInputScript>().enableExamineObjectText("I can't combine those...");
+                            GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().showConversation(GameManagerScript.gameManager.failedItemCombinationConversationData);
+                            //player.GetComponent<PlayerInputScript>().enableExamineObjectText("I can't combine those...");
                         }
                     }
                     else

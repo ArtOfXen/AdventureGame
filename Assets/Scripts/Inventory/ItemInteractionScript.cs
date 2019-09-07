@@ -131,8 +131,9 @@ public class ItemInteractionScript : MonoBehaviour, IPointerEnterHandler, IPoint
         switch (interactions[buttonNumber])
         {
             case InteractableObjectScript.InteractionType.Examine:
-                string examineText = inventory.items[itemSlotIndex].examineText;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().enableExamineObjectText(examineText);
+                //string examineText = inventory.items[itemSlotIndex].examineText;
+                //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().enableExamineObjectText(examineText);
+                GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().examineActor(dataOfItemInSlot, false);
                 break;
 
             case InteractableObjectScript.InteractionType.Combine:

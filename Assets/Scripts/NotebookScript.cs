@@ -67,7 +67,8 @@ public class NotebookScript : MonoBehaviour
         // no conversation in progress
         else
         {
-            FindObjectOfType<PlayerInputScript>().enableExamineObjectText(notes[buttonIndex].examineText);
+            //FindObjectOfType<PlayerInputScript>().enableExamineObjectText(notes[buttonIndex].examineText);
+            GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().examineActor(notes[buttonIndex], false);
         }
     }
 

@@ -25,7 +25,7 @@ public class PlayerInputScript : MonoBehaviour
     [HideInInspector] public ItemInteractionScript combiningItem;
 
     GameObject UI_nameOfHighlightedObject;
-    public GameObject UI_playerThoughtsText;
+    //public GameObject UI_playerThoughtsText;
 
     bool showExamineObjectText;
     float examineStartTime;
@@ -62,7 +62,7 @@ public class PlayerInputScript : MonoBehaviour
             if (Time.time - examineStartTime >= examineDurationTime)
             {
                 showExamineObjectText = false;
-                UI_playerThoughtsText.GetComponent<Text>().enabled = false;
+                //UI_playerThoughtsText.GetComponent<Text>().enabled = false;
             }
         }
 
@@ -166,11 +166,13 @@ public class PlayerInputScript : MonoBehaviour
         {
             // check if the item player is attempting to combine with is the notebook
             if (inventoryItem.itemSlotIndex == 0)
-                enableExamineObjectText("I can't combine those...");
+                GameManagerScript.gameManager.GetComponent<ConversationScript>().showConversation(GameManagerScript.gameManager.failedItemCombinationConversationData);
+                //enableExamineObjectText("I can't combine those...");
 
             // try to combine items
             else if (!GameManagerScript.gameManager.combineActors(combiningItem, inventoryItem))
-                enableExamineObjectText("I can't combine those...");
+                GameManagerScript.gameManager.GetComponent<ConversationScript>().showConversation(GameManagerScript.gameManager.failedItemCombinationConversationData);
+                //enableExamineObjectText("I can't combine those...");
             
             else
             {
@@ -332,6 +334,12 @@ public class PlayerInputScript : MonoBehaviour
         }
     }
 
+    public void setHighlightedWorldObjectToNull()
+    {
+        if (highlightedWorldObject != null)
+            stopHighlightingWorldObject(highlightedWorldObject);
+    }
+
     public void setHighlightedInventoryItemToNull()
     {
         if (highlightedInventoryItem != null)
@@ -368,14 +376,14 @@ public class PlayerInputScript : MonoBehaviour
         return queuedAction.interactionType;
     }
 
-    public void enableExamineObjectText(string examineText)
-    {
-        Debug.Log(examineText);
-        UI_playerThoughtsText.GetComponent<Text>().enabled = true;
-        UI_playerThoughtsText.GetComponent<Text>().text = examineText;
-        showExamineObjectText = true;
-        examineStartTime = Time.time;
-    }
+    //public void enableExamineObjectText(string examineText)
+    //{
+    //    Debug.Log(examineText);
+    //    UI_playerThoughtsText.GetComponent<Text>().enabled = true;
+    //    UI_playerThoughtsText.GetComponent<Text>().text = examineText;
+    //    showExamineObjectText = true;
+    //    examineStartTime = Time.time;
+    //}
 
     public void enableCombineWithText(ItemInteractionScript _combiningItem)
     {

@@ -3,7 +3,15 @@ guid: 4329b80c381408e4ab50d29447f1d6dc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - fadeOutImage_exclUI: {instanceID: 0}
+  - fadeOutImage_inclUI: {instanceID: 0}
+  - conversationUI: {instanceID: 0}
+  - notebookUI: {instanceID: 0}
+  - currentScene: {instanceID: 0}
+  - DEBUG_TEST_NOTE: {fileID: 11400000, guid: e0598ca57649e974cbaf6fc020ff922d, type: 2}
+  - failedItemCombinationConversationData: {fileID: 11400000, guid: 072b0aafec1d6f246ab35f673c4cfb0a,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
