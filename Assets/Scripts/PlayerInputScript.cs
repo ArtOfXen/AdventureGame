@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PlayerInputScript : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class PlayerInputScript : MonoBehaviour
     private InteractableObjectScript selectedWorldObject;
     private ItemInteractionScript highlightedInventoryItem;
     private ItemInteractionScript selectedInventoryItem;
+    private LeaveSceneScript highlightedSceneExit;
 
     bool aSelectionMenuIsOpen;
     [HideInInspector] public bool notebookIsOpen;
@@ -34,6 +37,9 @@ public class PlayerInputScript : MonoBehaviour
     private Vector3 currentSpeed;
     private Vector3 destinationPosition;
     float speedModifier = 6f;
+    private NavMeshAgent navMeshAgent;
+    private const float navMeshSampleDistance = 4f;
+    
 
     [HideInInspector] public bool mouseOverUI;
 
@@ -43,6 +49,7 @@ public class PlayerInputScript : MonoBehaviour
         currentSpeed = Vector3.zero;
         UI_nameOfHighlightedObject = GameObject.FindGameObjectWithTag("HoveredObjectName_UIText");
         destinationPosition = gameObject.transform.position;
+        navMeshAgent = GetComponent<NavMeshAgent>();
         setQueuedAction(null, InteractableObjectScript.InteractionType.Examine);
         mouseOverUI = false;
         showExamineObjectText = false;
@@ -66,6 +73,17 @@ public class PlayerInputScript : MonoBehaviour
             }
         }
 
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    RaycastHit hit;
+        //    Debug.Log("raycast sent");
+        //    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 5000))
+        //    {
+        //        navMeshAgent.SetDestination(hit.point);
+        //        //navMeshAgent.destination = hit.point;
+        //        Debug.Log("hit registered at " + hit.point + ". Agent moving to " + navMeshAgent.destination);
+        //    }
+        //}
 
         // get player inputs
 
@@ -109,6 +127,14 @@ public class PlayerInputScript : MonoBehaviour
                 }
             }
 
+            // player has clicked on a scene exit
+            else if (highlightedSceneExit != null)
+            {
+                closeCurrentSelectionMenu();
+                setQueuedAction(highlightedSceneExit.gameObject, InteractableObjectScript.InteractionType.GoTo);
+
+            }
+
             // if menu is open and player clicks outside of menu area, close menu.
             else if (aSelectionMenuIsOpen && !notebookIsOpen)
             {
@@ -118,13 +144,14 @@ public class PlayerInputScript : MonoBehaviour
             // set movement destination to mouse click location
             else if (!mouseOverUI)
             {
-                destinationPosition = getMousePositionInWorld(); // TODO: cast mouse ray and only set destination position if ray hits ground
+                //destinationPosition = getMousePositionInWorld(); // TODO: cast mouse ray and only set destination position if ray hits ground
+                
                 setQueuedAction(null, InteractableObjectScript.InteractionType.Examine);
             }
         }
 
         // update highlighted object UI
-        if (highlightedWorldObject != selectedWorldObject || combiningInProgress)
+        if (highlightedWorldObject != selectedWorldObject || combiningInProgress || highlightedSceneExit != null)
         {
             UI_nameOfHighlightedObject.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 20, Input.mousePosition.z);
         }
@@ -132,7 +159,7 @@ public class PlayerInputScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, destinationPosition, speedModifier);
+        //transform.position = Vector3.MoveTowards(transform.position, destinationPosition, speedModifier);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -195,6 +222,24 @@ public class PlayerInputScript : MonoBehaviour
         }
     }
 
+    public void groundClickedOn(BaseEventData data)
+    {
+        PointerEventData pointerData = (PointerEventData)data;
+        NavMeshHit hit;
+
+        if (NavMesh.SamplePosition(pointerData.pointerCurrentRaycast.worldPosition, out hit, navMeshSampleDistance, NavMesh.AllAreas))
+        {
+            destinationPosition = hit.position;
+        }
+        else
+        { // if a hit isn't found, move to nearest position
+            destinationPosition = pointerData.pointerCurrentRaycast.worldPosition;
+        }
+        navMeshAgent.SetDestination(destinationPosition);
+        navMeshAgent.isStopped = false;
+        //navMeshAgent.destination = destinationPosition;
+    }
+
     private void closeCurrentSelectionMenu()
     {
         if (aSelectionMenuIsOpen)
@@ -255,6 +300,8 @@ public class PlayerInputScript : MonoBehaviour
     public void stopMovement()
     {
         destinationPosition = transform.position; // player won't move because their destination is exactly where they are.
+        navMeshAgent.SetDestination(destinationPosition);
+        navMeshAgent.isStopped = true;
     }
 
     private Vector3 getMousePositionInWorld()
@@ -319,6 +366,30 @@ public class PlayerInputScript : MonoBehaviour
         }
     }
 
+    public void setHighlightedWorldObjectToSceneExit(LeaveSceneScript sceneExit)
+    {
+        // if the mouse is over a UI element, they shouldn't be able to highlight objects beneath UI
+        if (mouseOverUI) return;
+        setHighlightedWorldObjectToNull();
+        highlightedSceneExit = sceneExit;
+        UI_nameOfHighlightedObject.GetComponent<Text>().enabled = true;
+        if (sceneExit.adjacentSceneName == "map_screen")
+        {
+            UI_nameOfHighlightedObject.GetComponent<Text>().text = "Leave";
+        }
+        else
+        {
+            UI_nameOfHighlightedObject.GetComponent<Text>().text = "Go to " + sceneExit.adjacentSceneName;
+        }
+        UI_nameOfHighlightedObject.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 20, Input.mousePosition.z);
+    }
+
+    public void stopHighlighingSceneExit()
+    {
+        UI_nameOfHighlightedObject.GetComponent<Text>().enabled = false;
+        highlightedSceneExit = null;
+    }
+
     public void setHighlightedInventoryItem(ItemInteractionScript item)
     {
         // don't highlight if item is already selected
@@ -355,6 +426,8 @@ public class PlayerInputScript : MonoBehaviour
             queuedAction.anActionIsQueued = true;
             // start moving towards object
             destinationPosition = new Vector3(queuedAction.objectToActUpon.transform.position.x, transform.position.y, queuedAction.objectToActUpon.transform.position.z);
+            navMeshAgent.SetDestination(destinationPosition);
+            navMeshAgent.isStopped = false;
         }
         queuedAction.interactionType = newInteraction;
     }

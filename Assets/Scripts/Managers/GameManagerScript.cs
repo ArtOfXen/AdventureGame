@@ -23,6 +23,8 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private Image fadeOutImage_inclUI;
     public GameObject conversationUI;
     public GameObject notebookUI;
+    public GameObject mapScreenUI;
+    public GameObject inventoryUI;
     [HideInInspector] public SceneClass currentScene;
 
     public SceneClass[] allScenes;
@@ -63,7 +65,7 @@ public class GameManagerScript : MonoBehaviour
         currentScene = allScenes[0];
         notebookUI.GetComponent<NotebookScript>().addNote(DEBUG_TEST_NOTE);
 
-        yield return StartCoroutine(loadSceneAndSetActive("DactylStreet_1"));
+        yield return StartCoroutine(loadSceneAndSetActive("Ulysses Street"));
         StartCoroutine(fade(0f));
 
     }
@@ -76,7 +78,19 @@ public class GameManagerScript : MonoBehaviour
 
     public bool ConversationUIOpen { get; set; }
 
+    public void openMapScreen()
+    {
+        inventoryUI.GetComponent<InventoryScript>().hideInventory();
+        fadeOutBackground();
+        mapScreenUI.SetActive(true);
+    }
 
+    public void closeMapScreen()
+    {
+        mapScreenUI.SetActive(false);
+        fadeInBackground();
+        inventoryUI.GetComponent<InventoryScript>().unhideInventory();
+    }
 
     public void fadeOutBackground()
     {
@@ -98,6 +112,10 @@ public class GameManagerScript : MonoBehaviour
 
     public void fadeAndLoadScene(string sceneName)
     {
+        if (sceneName == SceneManager.GetSceneAt(SceneManager.sceneCount - 1).name)
+        {
+            return;
+        }
         if (!isCurrentlyFading)
         {
             StartCoroutine(fadeAndSwitchScene(sceneName));
@@ -119,7 +137,11 @@ public class GameManagerScript : MonoBehaviour
         }
 
         isCurrentlyFading = false;
-        fadeOutImage_inclUI.enabled = false;
+        if (finalAlpha == 0f)
+        {
+            fadeOutImage_inclUI.enabled = false;
+            inventoryUI.GetComponent<InventoryScript>().unhideInventory();
+        }
     }
 
     private IEnumerator fadeAndSwitchScene(string sceneName)
@@ -130,7 +152,9 @@ public class GameManagerScript : MonoBehaviour
 
         yield return StartCoroutine(fade(1f));
 
-        BeforeSceneUnload?.Invoke();
+        closeMapScreen();
+
+        BeforeSceneUnload?.Invoke(); // calls all functions that are 'subscibed' to the BeforeSceneUnload function
 
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 

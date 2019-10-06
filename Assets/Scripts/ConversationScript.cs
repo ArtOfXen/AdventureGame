@@ -72,14 +72,14 @@ public class ConversationScript : MonoBehaviour
             changeDialogueExcerpt(currentConversation.itemReactions[indexOfItemCombined].idOfDialogueExcerpt);
     }
     
-    public void examineActor(ActorData examinedActor, bool actorIsWorldObject)
+    public void examineActor(ActorData examinedActor, bool actorIsWorldObjectOrNote)
     {
         currentConversation = examinedActor.examineData;
-        int dialogueID;
-        if (actorIsWorldObject)
-            dialogueID = 0;
+        int dialogueID = 0;
+        if (actorIsWorldObjectOrNote)
+            dialogueID = 0; // examine text that shows when examining note or world object
         else
-            dialogueID = 1;
+            dialogueID = 1; // examine text that shows when examining an object which is in the player's inventory
 
         if (currentConversation.dialogue[dialogueID].rightCharacter != null)
         {

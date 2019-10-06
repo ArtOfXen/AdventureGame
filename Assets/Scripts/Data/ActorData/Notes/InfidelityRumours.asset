@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorName: Infidelity rumours.
   examineText: The old vicar told me he was doing the deed with that old lady.
-  examineData: {fileID: 0}
+  examineData: {fileID: 11400000, guid: 84f9fdf1cf515af4d9260d41938ad1f9, type: 2}
   interactionsOtherThanExamine_worldObject: 
   worldPosition: {x: 0, y: 0, z: 0}
   inventoryImage: {fileID: 0}

@@ -28,9 +28,7 @@ public class MapScreenButtonScript : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnClick(string nameOfNextScene)
     {
-        textComponent.SetActive(false);
-        mapScreen.SetActive(false);
-        if (nameOfNextScene == "NONE")
+        if (nameOfNextScene == "null")
         {
             Debug.Log("No scene name entered for button's OnClick event");
         }

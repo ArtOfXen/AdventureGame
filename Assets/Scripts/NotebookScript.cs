@@ -68,7 +68,7 @@ public class NotebookScript : MonoBehaviour
         else
         {
             //FindObjectOfType<PlayerInputScript>().enableExamineObjectText(notes[buttonIndex].examineText);
-            GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().examineActor(notes[buttonIndex], false);
+            GameManagerScript.gameManager.conversationUI.GetComponent<ConversationScript>().examineActor(notes[buttonIndex], true);
         }
     }
 

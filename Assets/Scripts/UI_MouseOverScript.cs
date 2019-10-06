@@ -21,6 +21,7 @@ public class UI_MouseOverScript : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // TODO: exception for when player isn't found OR change the mouseOverUI bool to be in gameManager
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputScript>().mouseOverUI = true;
     }
 
